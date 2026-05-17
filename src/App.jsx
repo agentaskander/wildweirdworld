@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import './App.css'
 
 const PORT = 3195
@@ -21,6 +22,7 @@ const ontologyDomains = [
     emoji: '🎮',
     connectsTo: ['Characters', 'Content'],
     items: [
+      'Dub Dub Dub: Ducks in the Tub',
       'Pet Café: Weird Critter Rescue',
       'Surviving the First Day of School',
       'Frog Fashion Runway',
@@ -35,6 +37,7 @@ const ontologyDomains = [
     emoji: '🐸',
     connectsTo: ['Stories', 'Kindness Missions'],
     items: [
+      'Collectible ducks',
       'Frogs',
       'Daddy long legs spiders',
       'Mini zoo animals',
@@ -142,6 +145,13 @@ const dashboardCards = [
     emoji: '🗺️',
     text: 'Collect founder-friendly sketches, mockups, calendars, and parent review plans.',
     href: '/plans',
+  },
+  {
+    title: 'Dub Dub Dub',
+    eyebrow: 'New game world',
+    emoji: '🛁',
+    text: 'Explore secret drains, collectible ducks, glowing cave oceans, and hidden tub kingdoms.',
+    href: '/dub-dub-dub',
   },
   {
     title: 'Ontology Builder',
@@ -537,6 +547,112 @@ const planSections = [
   },
 ]
 
+const dubCharacters = [
+  {
+    name: 'Captain Quackson',
+    icon: '🦆',
+    bio: 'Explorer duck captain who believes every drain is a doorway.',
+    traits: ['brave', 'splashy', 'map-loving'],
+    favoriteItems: ['bubble compass', 'tiny captain hat', 'glow-shell map'],
+    collectible: 'Rare captain duck with explorer gear and bathtub badge variants.',
+  },
+  {
+    name: 'Professor Bubble',
+    icon: '🫧',
+    bio: 'Axolotl scientist and inventor who studies portal foam.',
+    traits: ['curious', 'gentle', 'sparkly-smart'],
+    favoriteItems: ['bubble beakers', 'safety goggles', 'portable bubble lab'],
+    collectible: 'Science helper figure with gadget accessories and experiment stickers.',
+  },
+  {
+    name: 'Tubert',
+    icon: '🐸',
+    bio: 'Frog king of the drain tunnels who guards the old water roads.',
+    traits: ['royal', 'dramatic', 'kind-hearted'],
+    favoriteItems: ['lily crown', 'echo scepter', 'snack moss'],
+    collectible: 'Regal frog card with crown upgrades and tunnel map pieces.',
+  },
+  {
+    name: 'Longlegs Lucy',
+    icon: '🕸️',
+    bio: 'Friendly daddy long legs spider engineer who repairs pipe bridges.',
+    traits: ['helpful', 'clever', 'steady'],
+    favoriteItems: ['silk toolkit', 'mini wrench', 'bridge blueprints'],
+    collectible: 'Engineer buddy with bridge-building charms and silky trail effects.',
+  },
+  {
+    name: 'Draino',
+    icon: '🧭',
+    bio: 'Trash panda tunnel guide who knows every shortcut under the bathroom floor.',
+    traits: ['resourceful', 'funny', 'snack-motivated'],
+    favoriteItems: ['lantern lid', 'crumb pouch', 'secret tunnel stamps'],
+    collectible: 'Guide badge card with lantern skins and hidden route stickers.',
+  },
+]
+
+const dubWorlds = [
+  {
+    name: 'Drain Kingdom',
+    lore: 'A glowing pipe city where water-road bells ring whenever a new tub portal opens.',
+    hook: 'Find royal keys, old maps, and Tubert’s hidden throne room.',
+    collectibles: ['lily crowns', 'pipe pearls', 'royal drain coins'],
+  },
+  {
+    name: 'Sea Spider Caverns',
+    lore: 'Soft purple caves woven with safe silk bridges and tiny lantern nests.',
+    hook: 'Repair bridge paths with Longlegs Lucy and unlock cave murals.',
+    collectibles: ['silk charms', 'glow pebbles', 'bridge badges'],
+  },
+  {
+    name: 'Forgotten Bathroom Temple',
+    lore: 'An ancient tiled temple with soap-stone statues and whispery bubble doors.',
+    hook: 'Match tile symbols to wake up the gentle bathtub guardians.',
+    collectibles: ['soap gems', 'temple stickers', 'bubble runes'],
+  },
+  {
+    name: 'Bubble Reef',
+    lore: 'A warm reef of floating bubbles, giggle coral, and sleepy foam fish.',
+    hook: 'Bounce through bubble lanes to rescue lost ducklings.',
+    collectibles: ['foam flowers', 'reef badges', 'duckling cards'],
+  },
+  {
+    name: 'Tub Ocean',
+    lore: 'A huge cave ocean under the house where moonlight glows through drain stars.',
+    hook: 'Sail the bathmat raft and search for rare portal currents.',
+    collectibles: ['glow shells', 'raft flags', 'current maps'],
+  },
+  {
+    name: 'Sewer Safari',
+    lore: 'A silly safe safari route full of odd critters, snack clues, and echo tunnels.',
+    hook: 'Follow Draino’s lantern trail to photograph weird friendly creatures.',
+    collectibles: ['safari stamps', 'lantern skins', 'critter snapshots'],
+  },
+  {
+    name: 'The Golden Drain',
+    lore: 'A legendary glowing drain said to connect every weird world for one splashy minute.',
+    hook: 'Collect seven bath tokens to open a rare crossover portal.',
+    collectibles: ['gold tokens', 'portal stickers', 'legendary duck costumes'],
+  },
+]
+
+const gameplayLoop = ['EXPLORE', 'COLLECT', 'CUSTOMIZE', 'RESCUE', 'DISCOVER']
+
+const kidLoveCards = [
+  ['Exploration', 'Every drain can become a secret map.'],
+  ['Weird creatures', 'Friendly oddballs make each tunnel feel surprising.'],
+  ['Friendship', 'Helpers solve splashy problems together.'],
+  ['Creativity', 'Tub bases, stickers, and costumes make the world personal.'],
+  ['Imagination', 'Ordinary bathrooms become hidden kingdoms.'],
+  ['Hidden secrets', 'Rare portals reward careful looking.'],
+  ['Humor', 'Silly water logic keeps the adventure light.'],
+]
+
+const duckRarities = [
+  ['Bubble Common', 'Everyday duck friends with bright bath colors.'],
+  ['Glow Rare', 'Ducks that shimmer near cave oceans and secret pipes.'],
+  ['Golden Portal', 'Legendary ducks found only when the Golden Drain wakes up.'],
+]
+
 function currentRoute() {
   return window.location.pathname.replace(/\/$/, '') || '/'
 }
@@ -550,6 +666,9 @@ function Navigation() {
     <nav className="top-nav" aria-label="Wild Weird World HQ navigation">
       <a className={isRoute('/') ? 'active' : undefined} href="/">
         Dashboard
+      </a>
+      <a className={isRoute('/dub-dub-dub') ? 'active' : undefined} href="/dub-dub-dub">
+        Dub Dub Dub
       </a>
       <a className={isRoute('/ontology') ? 'active' : undefined} href="/ontology">
         Ontology
@@ -571,6 +690,34 @@ function Shell({ children }) {
       {children}
     </>
   )
+}
+
+function Seo({ title, description }) {
+  useEffect(() => {
+    document.title = title
+    const ensureMeta = (selector, attributes) => {
+      let tag = document.head.querySelector(selector)
+      if (!tag) {
+        tag = document.createElement('meta')
+        document.head.appendChild(tag)
+      }
+      Object.entries(attributes).forEach(([key, value]) => tag.setAttribute(key, value))
+    }
+
+    ensureMeta('meta[name="description"]', { name: 'description', content: description })
+    ensureMeta('meta[property="og:title"]', { property: 'og:title', content: title })
+    ensureMeta('meta[property="og:description"]', {
+      property: 'og:description',
+      content: description,
+    })
+    ensureMeta('meta[property="og:type"]', { property: 'og:type', content: 'website' })
+    ensureMeta('meta[property="og:url"]', {
+      property: 'og:url',
+      content: `${OFFICIAL_URL}/dub-dub-dub`,
+    })
+  }, [title, description])
+
+  return null
 }
 
 function Dashboard() {
@@ -636,6 +783,194 @@ function FlowMap() {
         </li>
       ))}
     </ol>
+  )
+}
+
+function DubHeroVisual() {
+  return (
+    <div className="dub-hero-visual" aria-label="Bathtub portal with ducks and bubbles">
+      <div className="underwater-glow"></div>
+      <div className="bathtub-portal">
+        <span className="portal-duck duck-one">🦆</span>
+        <span className="portal-duck duck-two">🛁</span>
+        <span className="portal-duck duck-three">🦆</span>
+        <div className="drain-ring"></div>
+      </div>
+      {Array.from({ length: 14 }, (_, index) => (
+        <span className={`bubble bubble-${index + 1}`} key={`bubble-${index + 1}`}></span>
+      ))}
+    </div>
+  )
+}
+
+function DubDubDubPage() {
+  const pageTitle = 'Dub Dub Dub™ | Ducks in the Tub'
+  const pageDescription =
+    'A kid-safe game concept about ducks riding through secret drains, glowing cave oceans, hidden kingdoms, and cozy weird worlds.'
+
+  return (
+    <Shell>
+      <Seo title={pageTitle} description={pageDescription} />
+      <main className="dub-page">
+        <section className="dub-hero" aria-labelledby="dub-title">
+          <div className="dub-hero-copy">
+            <p className="eyebrow">New game concept</p>
+            <h1 id="dub-title">Dub Dub Dub™</h1>
+            <p className="dub-subtitle">Ducks in the Tub</p>
+            <h2>One bathtub connects every weird world.</h2>
+            <p className="lede">
+              Ride with ducks through secret drains, underground rivers, glowing cave oceans, and
+              hidden sea kingdoms.
+            </p>
+            <div className="hero-actions">
+              <a href="#drain-portal">Explore the Drain Portal</a>
+              <a href="#characters">Meet the Characters</a>
+            </div>
+          </div>
+          <DubHeroVisual />
+        </section>
+
+        <section className="dub-lore" id="drain-portal" aria-labelledby="dub-lore-title">
+          <div>
+            <p className="eyebrow">What is Dub Dub Dub?</p>
+            <h2 id="dub-lore-title">A secret underwater universe hidden beneath ordinary bathtubs.</h2>
+          </div>
+          <p>
+            Dub Dub Dub begins when bathwater spins just right and the drain becomes a tiny glowing
+            door. Under the tub are hidden worlds, subterranean rivers, drain kingdoms, underwater
+            trains, weird creatures, and secret portals that only brave duck explorers can find.
+          </p>
+        </section>
+
+        <section className="dub-map" aria-labelledby="dub-map-title">
+          <p className="eyebrow">Tub tunnel map</p>
+          <h2 id="dub-map-title">Follow the bubbles from bathroom to ocean cave.</h2>
+          <div className="map-path">
+            {['Bathtub Portal', 'Pipe Slide', 'Bubble Train', 'Cave Ocean', 'Golden Drain'].map(
+              (stop, index) => (
+                <div className="map-stop" key={stop}>
+                  <span>{index + 1}</span>
+                  <strong>{stop}</strong>
+                </div>
+              ),
+            )}
+          </div>
+        </section>
+
+        <section className="dub-section" id="characters" aria-labelledby="dub-characters-title">
+          <div className="section-heading">
+            <p className="eyebrow">Character grid</p>
+            <h2 id="dub-characters-title">Meet the splash crew.</h2>
+          </div>
+          <div className="dub-card-grid character-grid">
+            {dubCharacters.map((character) => (
+              <article className="dub-character-card" key={character.name}>
+                <span className="dub-icon" aria-hidden="true">
+                  {character.icon}
+                </span>
+                <h3>{character.name}</h3>
+                <p>{character.bio}</p>
+                <div className="chips">
+                  {character.traits.map((trait) => (
+                    <span key={trait}>{trait}</span>
+                  ))}
+                </div>
+                <dl className="platform-details">
+                  <div>
+                    <dt>Favorite items</dt>
+                    <dd>{character.favoriteItems.join(', ')}</dd>
+                  </div>
+                  <div>
+                    <dt>Collectible potential</dt>
+                    <dd>{character.collectible}</dd>
+                  </div>
+                </dl>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section className="dub-section" aria-labelledby="dub-worlds-title">
+          <div className="section-heading">
+            <p className="eyebrow">Secret worlds</p>
+            <h2 id="dub-worlds-title">Every drain opens somewhere strange.</h2>
+          </div>
+          <div className="dub-card-grid">
+            {dubWorlds.map((world, index) => (
+              <article className={`world-card world-card-${index + 1}`} key={world.name}>
+                <h3>{world.name}</h3>
+                <p>{world.lore}</p>
+                <strong>{world.hook}</strong>
+                <div className="chips">
+                  {world.collectibles.map((item) => (
+                    <span key={item}>{item}</span>
+                  ))}
+                </div>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section className="dub-gameplay" aria-labelledby="dub-gameplay-title">
+          <div>
+            <p className="eyebrow">Gameplay loop</p>
+            <h2 id="dub-gameplay-title">Explore, collect, customize, rescue, discover.</h2>
+            <p>
+              Players collect ducks, decorate tub bases, rescue gentle creatures, unlock hidden
+              paths, find rare portals, earn stickers, and dress up characters with cozy costumes.
+            </p>
+          </div>
+          <ol className="gameplay-loop">
+            {gameplayLoop.map((step) => (
+              <li key={step}>{step}</li>
+            ))}
+          </ol>
+          <div className="rarity-row">
+            {duckRarities.map(([rarity, text]) => (
+              <article key={rarity}>
+                <strong>{rarity}</strong>
+                <p>{text}</p>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section className="dub-section" aria-labelledby="kid-love-title">
+          <div className="section-heading">
+            <p className="eyebrow">Why kids love it</p>
+            <h2 id="kid-love-title">Cozy wonder with silly secrets.</h2>
+          </div>
+          <div className="kid-love-grid">
+            {kidLoveCards.map(([title, text]) => (
+              <article key={title}>
+                <h3>{title}</h3>
+                <p>{text}</p>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section className="www-connection" aria-labelledby="www-connection-title">
+          <p className="eyebrow">Wild Weird World connection</p>
+          <h2 id="www-connection-title">The drain is a tiny doorway to bigger weird worlds.</h2>
+          <p>
+            Dub Dub Dub can quietly connect to future crossover worlds, creature universes, and
+            hidden portals across Wild Weird World. A rare tub current might drift toward ZooQueen,
+            Weird Critter Cafe, or even a brave school-day adventure from Surviving the First Day of
+            School.
+          </p>
+        </section>
+
+        <section className="dub-cta" aria-labelledby="dub-cta-title">
+          <p className="eyebrow">Drain portal ready</p>
+          <h2 id="dub-cta-title">Ready to go down the drain?</h2>
+          <div className="hero-actions">
+            <a href="#drain-portal">Join the Adventure</a>
+            <a href="/">Explore WWW HQ</a>
+          </div>
+        </section>
+      </main>
+    </Shell>
   )
 }
 
@@ -984,6 +1319,8 @@ function App() {
         <OntologyPage />
       ) : isRoute('/handles') ? (
         <HandlesPage />
+      ) : isRoute('/dub-dub-dub') ? (
+        <DubDubDubPage />
       ) : isRoute('/plans') ? (
         <PlansPage />
       ) : (
