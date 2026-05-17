@@ -1,0 +1,997 @@
+import './App.css'
+
+const PORT = 3195
+const OFFICIAL_DOMAIN = 'wildweirdworld.com'
+const OFFICIAL_URL = `https://${OFFICIAL_DOMAIN}`
+
+const ontologyDomains = [
+  {
+    title: 'Universe Layer',
+    emoji: '🌎',
+    connectsTo: ['Game Portfolio', 'Founder OS'],
+    items: [
+      'Wild Weird World HQ',
+      'Zoo Queen Command Center',
+      'WWW HQ = Wild Weird World Headquarters',
+      'hidden founder meaning: Wild Weird World Hive Queen',
+    ],
+  },
+  {
+    title: 'Game Portfolio Layer',
+    emoji: '🎮',
+    connectsTo: ['Characters', 'Content'],
+    items: [
+      'Pet Café: Weird Critter Rescue',
+      'Surviving the First Day of School',
+      'Frog Fashion Runway',
+      'Daddy Long Legs Detective Agency',
+      'Mini Zoo Mogul',
+      'Critter Rescue Sleepover',
+      'Animal Influencer Academy',
+    ],
+  },
+  {
+    title: 'Character & Creature Layer',
+    emoji: '🐸',
+    connectsTo: ['Stories', 'Kindness Missions'],
+    items: [
+      'Frogs',
+      'Daddy long legs spiders',
+      'Mini zoo animals',
+      'Weird critters',
+      'Friend tester avatars',
+      'NPC helpers',
+      'Kindness heroes',
+    ],
+  },
+  {
+    title: 'Business Management Layer',
+    emoji: '📋',
+    connectsTo: ['Launch Readiness', 'Parent Approval'],
+    items: [
+      'Vision',
+      'Mission',
+      'Milestones',
+      'Quick wins',
+      'Founder XP',
+      'Friend feedback',
+      'Parent approval',
+      'Practice merch studio',
+      'Launch readiness',
+    ],
+  },
+  {
+    title: 'Content Domain Layer',
+    emoji: '🎬',
+    connectsTo: ['Games', 'Approval Queue'],
+    items: [
+      'Video ideas',
+      'Scripts',
+      'Behind-the-scenes posts',
+      'Friend polls',
+      'Character reveals',
+      'Weird Animal of the Week',
+      'Game trailers',
+      'Parent approval queue',
+    ],
+  },
+  {
+    title: 'Merch Layer',
+    emoji: '✨',
+    connectsTo: ['Practice Shop', 'Feedback'],
+    items: [
+      'Stickers',
+      'Bracelets',
+      'Trading cards',
+      'Keychains',
+      'Notebooks',
+      'Mini zoo passports',
+      'Practice shop ideas',
+    ],
+  },
+  {
+    title: 'Safety Layer',
+    emoji: '🛡️',
+    connectsTo: ['Every Layer'],
+    items: [
+      'Parent-approved only',
+      'No real sales inside app',
+      'No stranger DMs',
+      'No public comments from strangers',
+      'No collection of kid data',
+      'Friend feedback only',
+      'Practice business learning',
+    ],
+  },
+  {
+    title: 'Outcomes Layer',
+    emoji: '🏆',
+    connectsTo: ['Next Update'],
+    items: [
+      'Creative confidence',
+      'Friend engagement',
+      'Storytelling',
+      'Basic business thinking',
+      'Software/game learning',
+      'Kindness and animal curiosity',
+      'Founder discipline',
+    ],
+  },
+]
+
+const flowSteps = ['Idea', 'Game', 'Content', 'Merch', 'Feedback', 'Next Update']
+
+const dashboardCards = [
+  {
+    title: 'Domain secured: wildweirdworld.com',
+    eyebrow: 'Official domain',
+    emoji: '🌐',
+    text: 'The parent-owned Wild Weird World domain is secured for future approved publishing.',
+    href: OFFICIAL_URL,
+  },
+  {
+    title: 'Secure creator handles',
+    eyebrow: 'Parent planning',
+    emoji: '🔐',
+    text: 'Track parent-approved account reservations before launch, with no posting automation.',
+    href: '/handles',
+  },
+  {
+    title: 'Open plans & mockups',
+    eyebrow: 'Blueprint board',
+    emoji: '🗺️',
+    text: 'Collect founder-friendly sketches, mockups, calendars, and parent review plans.',
+    href: '/plans',
+  },
+  {
+    title: 'Ontology Builder',
+    eyebrow: 'Reward badge',
+    emoji: '🏅',
+    text: 'Map how each safe idea connects before building the next game update.',
+  },
+  {
+    title: 'Practice Studio',
+    eyebrow: 'Founder lab',
+    emoji: '🧪',
+    text: 'Try merch, content, and mission ideas without real payments or public posting.',
+  },
+  {
+    title: 'Parent-Safe Queue',
+    eyebrow: 'Safety check',
+    emoji: '✅',
+    text: 'Keep every publish idea in a parent-approved lane.',
+  },
+]
+
+const universeLinks = [
+  ['Universe', 'Games'],
+  ['Games', 'Characters'],
+  ['Characters', 'Content'],
+  ['Content', 'Practice Merch'],
+  ['Practice Merch', 'Friend Feedback'],
+  ['Friend Feedback', 'Next Update'],
+  ['Safety', 'Every Step'],
+]
+
+const ontologyFlowChains = [
+  ['Universe', 'Games', 'Characters', 'Content', 'Practice Merch', 'Friend Feedback', 'Next Update'],
+  ['Safety', 'Parent Approval', 'Launch Readiness'],
+]
+
+const handlePatterns = [
+  '@WildWeirdWorld',
+  '@WildWeirdWorldHQ',
+  '@WildWeirdWorldKids',
+  '@ZooQueenHQ',
+  '@WeirdCritterCafe',
+  '@ZooQueenCommand',
+  '@MiniZooMogul',
+  '@DaddyLongLegsDetective',
+  '@PetCafeRescue',
+  '@FrogFashionRunway',
+  '@CritterRescueSleepover',
+  '@AnimalInfluencerAcademy',
+  '@FirstDaySurvivor',
+  '@SpiderSilkSmoothie',
+]
+
+const primaryHandlePatterns = handlePatterns.slice(0, 5)
+const restoredHandlePatterns = handlePatterns.slice(5)
+
+const platformCards = [
+  {
+    section: 'Secure First',
+    platform: 'Domain',
+    priority: 'Secured',
+    suggestedHandle: OFFICIAL_DOMAIN,
+    why: 'Official home base for Wild Weird World when parent-approved publishing begins.',
+    parentOwner: 'Parent-owned',
+    safety: 'Parent manages domain, DNS, and publishing.',
+    status: 'Secured',
+    nextStep: 'Keep renewal, DNS, and publishing access in the parent password manager.',
+  },
+  {
+    section: 'Secure First',
+    platform: 'YouTube',
+    priority: 'Secure Now',
+    suggestedHandle: '@WildWeirdWorldHQ',
+    why: 'Best home for game trailers, safe project updates, and parent-approved videos.',
+    parentOwner: 'Parent-owned brand channel',
+    safety: 'No public DMs; comments off or parent-reviewed.',
+    status: 'Not checked',
+    nextStep: 'Check handle and reserve with parent recovery email.',
+  },
+  {
+    section: 'Secure First',
+    platform: 'TikTok',
+    priority: 'Secure Now',
+    suggestedHandle: '@WildWeirdWorldHQ',
+    why: 'Protects the brand name before short videos are planned.',
+    parentOwner: 'Parent-owned placeholder only',
+    safety: 'No posting unless parent approves; no DMs.',
+    status: 'Not checked',
+    nextStep: 'Reserve only; keep account private until launch plan is approved.',
+  },
+  {
+    section: 'Secure First',
+    platform: 'Instagram',
+    priority: 'Secure Now',
+    suggestedHandle: '@WildWeirdWorld',
+    why: 'Useful for character reveals, art, and parent-approved behind-the-scenes posts.',
+    parentOwner: 'Parent-owned brand account',
+    safety: 'No stranger comments without parent review.',
+    status: 'Not checked',
+    nextStep: 'Check primary and HQ handle variants.',
+  },
+  {
+    section: 'Secure First',
+    platform: 'Roblox group name',
+    priority: 'Secure Now',
+    suggestedHandle: 'Wild Weird World HQ',
+    why: 'Protects the game community name for future parent-managed use.',
+    parentOwner: 'Parent-managed group name',
+    safety: 'No open community features for kids yet.',
+    status: 'Not checked',
+    nextStep: 'Search group name availability and reserve safely.',
+  },
+  {
+    section: 'Secure First',
+    platform: 'Gmail / Google account',
+    priority: 'Secure Now',
+    suggestedHandle: 'wildweirdworldhq',
+    why: 'Creates a parent-controlled recovery identity for brand accounts.',
+    parentOwner: 'Parent recovery email required',
+    safety: 'No child personal info in account details.',
+    status: 'Not checked',
+    nextStep: 'Reserve Google identity and store recovery details.',
+  },
+  {
+    section: 'Secure First',
+    platform: 'Domain names',
+    priority: 'Secured',
+    suggestedHandle: OFFICIAL_DOMAIN,
+    why: 'Keeps the brand name available for the future public website.',
+    parentOwner: 'Parent-owned domain account',
+    safety: 'Parent manages domain, DNS, and publishing.',
+    status: 'Secured',
+    nextStep: 'Record registrar, DNS, and renewal details in the parent password manager.',
+  },
+  {
+    section: 'Secure First',
+    platform: 'Pinterest',
+    priority: 'Secure Now',
+    suggestedHandle: '@WildWeirdWorldHQ',
+    why: 'Good for parent-approved mood boards, animal inspiration, and craft references.',
+    parentOwner: 'Parent-owned planning account',
+    safety: 'No child personal boards or private info.',
+    status: 'Not checked',
+    nextStep: 'Reserve handle and keep boards brand-only.',
+  },
+  {
+    section: 'Secure First',
+    platform: 'Etsy shop name placeholder',
+    priority: 'Secure Now',
+    suggestedHandle: 'WildWeirdWorldHQ',
+    why: 'Protects a practice shop name for future parent-run merch.',
+    parentOwner: 'Parent-owned only',
+    safety: 'No real sales from this app; parent handles any future shop.',
+    status: 'Not checked',
+    nextStep: 'Check name only; do not open sales from WWW-HQ.',
+  },
+  {
+    section: 'Secure First',
+    platform: 'Redbubble/print-on-demand placeholder',
+    priority: 'Secure Now',
+    suggestedHandle: 'WildWeirdWorldHQ',
+    why: 'Protects a parent-owned placeholder for future art experiments.',
+    parentOwner: 'Parent-owned only',
+    safety: 'No real selling or shipping from WWW-HQ.',
+    status: 'Not checked',
+    nextStep: 'Check handle and record availability.',
+  },
+  {
+    section: 'Future Options',
+    platform: 'Threads',
+    priority: 'Later',
+    suggestedHandle: '@WildWeirdWorldHQ',
+    why: 'May help with parent-written launch notes later.',
+    parentOwner: 'Parent-owned future account',
+    safety: 'No kid posting or direct messaging.',
+    status: 'Not checked',
+    nextStep: 'Revisit after primary handles are secured.',
+  },
+  {
+    section: 'Future Options',
+    platform: 'X',
+    priority: 'Later',
+    suggestedHandle: '@WildWeirdWorldHQ',
+    why: 'Useful only if a parent wants an official update channel.',
+    parentOwner: 'Parent-owned future account',
+    safety: 'Avoid public replies from strangers for now.',
+    status: 'Not checked',
+    nextStep: 'Reserve only after primary family-safe channels.',
+  },
+  {
+    section: 'Future Options',
+    platform: 'Facebook Page',
+    priority: 'Later',
+    suggestedHandle: 'Wild Weird World HQ',
+    why: 'Could become a parent-facing announcement page.',
+    parentOwner: 'Parent-owned page',
+    safety: 'No child personal details or open comments.',
+    status: 'Not checked',
+    nextStep: 'Consider only for parent audience.',
+  },
+  {
+    section: 'Future Options',
+    platform: 'Discord community placeholder',
+    priority: 'Later',
+    suggestedHandle: 'Wild Weird World HQ',
+    why: 'Possible future parent-run community, not a kid space yet.',
+    parentOwner: 'Parent-run only',
+    safety: 'Not for kids yet; no open DMs.',
+    status: 'Not checked',
+    nextStep: 'Do not launch community until parent moderation plan exists.',
+  },
+  {
+    section: 'Future Options',
+    platform: 'Twitch',
+    priority: 'Later',
+    suggestedHandle: '@WildWeirdWorldHQ',
+    why: 'Future-only option for parent-approved demos.',
+    parentOwner: 'Parent-owned future account',
+    safety: 'No live streaming without parent plan.',
+    status: 'Not checked',
+    nextStep: 'Skip until games are ready.',
+  },
+  {
+    section: 'Avoid For Now',
+    platform: 'Snapchat',
+    priority: 'Avoid for Now',
+    suggestedHandle: '@WildWeirdWorldHQ',
+    why: 'Not needed for safe founder practice.',
+    parentOwner: 'Do not create for now',
+    safety: 'Avoid kid-facing messaging features.',
+    status: 'Not checked',
+    nextStep: 'Leave off the launch checklist.',
+  },
+  {
+    section: 'Avoid For Now',
+    platform: 'Reddit',
+    priority: 'Avoid for Now',
+    suggestedHandle: 'WildWeirdWorldHQ',
+    why: 'Open public discussion is not needed before launch.',
+    parentOwner: 'Do not create for now',
+    safety: 'Avoid stranger comments and public debate spaces.',
+    status: 'Not checked',
+    nextStep: 'Revisit only with a parent moderation plan.',
+  },
+]
+
+const namingRules = [
+  'Keep names short',
+  'Avoid using child’s real name',
+  'Avoid birth year, school, city, or private info',
+  'Use brand handles, not personal handles',
+  'Keep one master spreadsheet or parent password manager',
+  'Parent owns all accounts',
+  'Use recovery email controlled by parent',
+]
+
+const parentSafetyChecklist = [
+  'Parent owns account',
+  'Two-factor authentication enabled',
+  'No public DMs',
+  'Comments off or parent-reviewed',
+  'No location sharing',
+  'No face/voice posting unless parent approves',
+  'No real sales without parent handling',
+  'No school name or personal details',
+  'Keep practice/friend-feedback language',
+]
+
+const bestNextActions = [
+  'Check @WildWeirdWorldHQ',
+  'Reserve Gmail/Google identity',
+  'Secure Roblox group name',
+]
+
+const planSections = [
+  {
+    title: 'Universe Blueprint',
+    cards: [
+      {
+        name: 'Zoo Queen Command Center dashboard wireframe',
+        purpose: 'Map the first screen for games, missions, ideas, and parent review.',
+        status: 'Draft',
+        nextAction: 'Sketch the top navigation and dashboard cards.',
+      },
+      {
+        name: 'Season 1 roadmap poster',
+        purpose: 'Show the first batch of safe games, content ideas, and feedback loops.',
+        status: 'Sketch',
+        nextAction: 'Pick the first three launch themes.',
+      },
+    ],
+  },
+  {
+    title: 'Game Mockups',
+    cards: [
+      {
+        name: 'Pet Café lobby sketch',
+        purpose: 'Plan the friendly entry area for weird critter rescue.',
+        status: 'Sketch',
+        nextAction: 'Draw counter, adoption board, and cozy critter zones.',
+      },
+      {
+        name: 'First Day of School panic meter concept',
+        purpose: 'Design a kid-friendly meter for brave choices and calm-down moments.',
+        status: 'Draft',
+        nextAction: 'List safe meter states and reward moments.',
+      },
+    ],
+  },
+  {
+    title: 'Character Sheets',
+    cards: [
+      {
+        name: 'Weird Critter adoption card mockup',
+        purpose: 'Create a safe character card format for traits, care tips, and kindness quests.',
+        status: 'Ready for Friend Feedback',
+        nextAction: 'Ask friends which critter traits feel funniest.',
+      },
+      {
+        name: 'Daddy Long Legs Detective character sheet',
+        purpose: 'Define the detective helper, clue style, and gentle mystery tone.',
+        status: 'Draft',
+        nextAction: 'Add outfit, catchphrase, and first mystery clue.',
+      },
+    ],
+  },
+  {
+    title: 'Content Calendar',
+    cards: [
+      {
+        name: 'Social video storyboard template',
+        purpose: 'Plan parent-approved videos before anything is posted.',
+        status: 'Parent Review',
+        nextAction: 'Add hook, scene list, safety check, and approval box.',
+      },
+      {
+        name: 'Frog Fashion Runway outfit board',
+        purpose: 'Collect outfit ideas for frog characters and future reveal posts.',
+        status: 'Sketch',
+        nextAction: 'Choose five silly outfit themes.',
+      },
+    ],
+  },
+  {
+    title: 'Practice Merch Board',
+    cards: [
+      {
+        name: 'Sticker sheet mockup',
+        purpose: 'Practice arranging critters, logos, and funny labels without real selling.',
+        status: 'Draft',
+        nextAction: 'Pick eight sticker ideas for parent review.',
+      },
+      {
+        name: 'Mini Zoo passport printable',
+        purpose: 'Create a printable practice collectible for zoo missions and stamps.',
+        status: 'Sketch',
+        nextAction: 'Sketch cover, stamp boxes, and animal facts.',
+      },
+    ],
+  },
+  {
+    title: 'Friend Feedback Forms',
+    cards: [
+      {
+        name: 'Friend feedback form',
+        purpose: 'Collect simple friend reactions without personal data.',
+        status: 'Parent Review',
+        nextAction: 'Keep questions about favorites, fun, and confusing parts only.',
+      },
+    ],
+  },
+  {
+    title: 'Next Update Planner',
+    cards: [
+      {
+        name: 'Next update planner',
+        purpose: 'Turn safe feedback into one small improvement at a time.',
+        status: 'Sketch',
+        nextAction: 'Add columns for idea, reason, parent check, and next build step.',
+      },
+    ],
+  },
+  {
+    title: 'Parent Review Checklist',
+    cards: [
+      {
+        name: 'Parent approval checklist',
+        purpose: 'Review privacy, comments, sales, images, and publishing before anything goes out.',
+        status: 'Parent Review',
+        nextAction: 'Add checkboxes for no DMs, no kid data, and no real sales.',
+      },
+    ],
+  },
+]
+
+function currentRoute() {
+  return window.location.pathname.replace(/\/$/, '') || '/'
+}
+
+function isRoute(route) {
+  return currentRoute() === route
+}
+
+function Navigation() {
+  return (
+    <nav className="top-nav" aria-label="Wild Weird World HQ navigation">
+      <a className={isRoute('/') ? 'active' : undefined} href="/">
+        Dashboard
+      </a>
+      <a className={isRoute('/ontology') ? 'active' : undefined} href="/ontology">
+        Ontology
+      </a>
+      <a className={isRoute('/handles') ? 'active' : undefined} href="/handles">
+        Handles
+      </a>
+      <a className={isRoute('/plans') ? 'active' : undefined} href="/plans">
+        Plans
+      </a>
+    </nav>
+  )
+}
+
+function Shell({ children }) {
+  return (
+    <>
+      <Navigation />
+      {children}
+    </>
+  )
+}
+
+function Dashboard() {
+  return (
+    <Shell>
+      <main>
+        <section className="hero-panel">
+          <p className="eyebrow">Wild Weird World HQ</p>
+          <h1>Zoo Queen Command Center</h1>
+          <p className="lede">
+            Kid-safe founder command center for games, weird animal worlds, creative projects,
+            practice merch ideas, and friend-focused experiences.
+          </p>
+          <div className="hero-actions">
+            <a href="/ontology">Open Ontology</a>
+            <a href="/handles">Secure creator handles</a>
+            <a href="/plans">Open plans & mockups</a>
+            <a href={OFFICIAL_URL}>Official domain</a>
+            <span>Local port {PORT}</span>
+          </div>
+        </section>
+
+        <section className="domain-banner" aria-label="Official domain">
+          <strong>Domain secured: {OFFICIAL_DOMAIN}</strong>
+          <span>Parent-owned home base for future approved publishing.</span>
+        </section>
+
+        <section className="card-grid" aria-label="Dashboard quick links">
+          {dashboardCards.map((card) => (
+            <article className="feature-card" key={card.title}>
+              <span className="card-emoji" aria-hidden="true">
+                {card.emoji}
+              </span>
+              <p className="eyebrow">{card.eyebrow}</p>
+              <h2>{card.title}</h2>
+              <p>{card.text}</p>
+              {card.href ? (
+                <a className="card-link" href={card.href}>
+                  Open
+                </a>
+              ) : null}
+            </article>
+          ))}
+        </section>
+
+        <section className="flow-panel" aria-labelledby="dashboard-flow">
+          <p className="eyebrow">Founder loop</p>
+          <h2 id="dashboard-flow">From Idea → Game → Content → Merch → Feedback → Next Update</h2>
+          <FlowMap />
+        </section>
+      </main>
+    </Shell>
+  )
+}
+
+function FlowMap() {
+  return (
+    <ol className="flow-map">
+      {flowSteps.map((step, index) => (
+        <li key={step}>
+          <span>{index + 1}</span>
+          <strong>{step}</strong>
+        </li>
+      ))}
+    </ol>
+  )
+}
+
+function UniverseMap() {
+  return (
+    <section className="universe-map" aria-labelledby="universe-map-title">
+      <div>
+        <p className="eyebrow">Universe Map</p>
+        <h2 id="universe-map-title">Everything connects through safe creative practice.</h2>
+      </div>
+      <div className="orbit-map" aria-label="Universe relationship map">
+        <div className="orbit-center">WWW HQ</div>
+        {universeLinks.map(([from, to]) => (
+          <div className="orbit-chip" key={`${from}-${to}`}>
+            <strong>{from}</strong>
+            <span>connects to</span>
+            <strong>{to}</strong>
+          </div>
+        ))}
+      </div>
+    </section>
+  )
+}
+
+function OntologyFlowChains() {
+  return (
+    <section className="ontology-flow-chains" aria-labelledby="ontology-visual-flow-title">
+      <div className="section-heading">
+        <p className="eyebrow">Visual ontology flow</p>
+        <h2 id="ontology-visual-flow-title">How the Wild Weird World loop moves.</h2>
+      </div>
+      {ontologyFlowChains.map((chain) => (
+        <div className="flow-chain" key={chain.join('-')} aria-label={chain.join(' connects to ')}>
+          {chain.map((item, index) => (
+            <div className="flow-chain-step" key={item}>
+              <span>{item}</span>
+              {index < chain.length - 1 ? <strong>CONNECTS TO</strong> : null}
+            </div>
+          ))}
+        </div>
+      ))}
+    </section>
+  )
+}
+
+function FounderOS() {
+  return (
+    <section className="founder-os" aria-labelledby="founder-os-title">
+      <p className="eyebrow">Founder Operating System</p>
+      <h2 id="founder-os-title">A parent-safe way to practice building.</h2>
+      <div className="os-lanes">
+        {['Vision', 'Mission', 'Milestones', 'Quick wins', 'Founder XP', 'Parent approval'].map(
+          (lane, index) => (
+            <div className="os-lane" key={lane}>
+              <span>{index + 1}</span>
+              <strong>{lane}</strong>
+              <small>connects to safe next steps</small>
+            </div>
+          ),
+        )}
+      </div>
+    </section>
+  )
+}
+
+function OntologyPage() {
+  return (
+    <Shell>
+      <main>
+        <section className="ontology-hero">
+          <p className="eyebrow">Ontology</p>
+          <h1>Wild Weird World Ontology</h1>
+          <p className="lede">
+            “How the universe connects games, characters, social ideas, merch, missions, and
+            founder skills.”
+          </p>
+        </section>
+
+        <UniverseMap />
+
+        <OntologyFlowChains />
+
+        <section className="ontology-grid" aria-label="Public-safe ontology domains">
+          {ontologyDomains.map((domain) => (
+            <article className="ontology-card" key={domain.title}>
+              <div className="ontology-card-header">
+                <span className="card-emoji" aria-hidden="true">
+                  {domain.emoji}
+                </span>
+                <div>
+                  <p className="eyebrow">connects to {domain.connectsTo.join(' + ')}</p>
+                  <h2>{domain.title}</h2>
+                </div>
+              </div>
+              <div className="chips">
+                {domain.items.map((item) => (
+                  <span key={item}>{item}</span>
+                ))}
+              </div>
+            </article>
+          ))}
+        </section>
+
+        <FounderOS />
+
+        <section className="flow-panel" aria-labelledby="ontology-flow">
+          <p className="eyebrow">Creative update path</p>
+          <h2 id="ontology-flow">From Idea → Game → Content → Merch → Feedback → Next Update</h2>
+          <FlowMap />
+        </section>
+      </main>
+    </Shell>
+  )
+}
+
+function PlatformCard({ platform }) {
+  return (
+    <article className="platform-card">
+      <div className="platform-card-top">
+        <div>
+          <p className="eyebrow">{platform.platform}</p>
+          <h3>{platform.suggestedHandle}</h3>
+        </div>
+        <span className={`priority-chip ${platform.priority.toLowerCase().replaceAll(' ', '-')}`}>
+          {platform.priority}
+        </span>
+      </div>
+      <dl className="platform-details">
+        <div>
+          <dt>Why it matters</dt>
+          <dd>{platform.why}</dd>
+        </div>
+        <div>
+          <dt>Parent owner status</dt>
+          <dd>{platform.parentOwner}</dd>
+        </div>
+        <div>
+          <dt>Safety note</dt>
+          <dd>{platform.safety}</dd>
+        </div>
+        <div>
+          <dt>Reservation status</dt>
+          <dd>{platform.status}</dd>
+        </div>
+        <div>
+          <dt>Next step</dt>
+          <dd>{platform.nextStep}</dd>
+        </div>
+      </dl>
+    </article>
+  )
+}
+
+function HandleSection({ title }) {
+  const cards = platformCards.filter((platform) => platform.section === title)
+
+  return (
+    <section className="handle-section" aria-labelledby={`${title.replaceAll(' ', '-').toLowerCase()}-title`}>
+      <div className="section-heading">
+        <p className="eyebrow">handle plan</p>
+        <h2 id={`${title.replaceAll(' ', '-').toLowerCase()}-title`}>{title}</h2>
+      </div>
+      <div className="platform-grid">
+        {cards.map((platform) => (
+          <PlatformCard platform={platform} key={`${platform.section}-${platform.platform}`} />
+        ))}
+      </div>
+    </section>
+  )
+}
+
+function HandleSecurityScore() {
+  const completed = parentSafetyChecklist.filter((_, index) => index < 3).length
+  const score = Math.round((completed / parentSafetyChecklist.length) * 100)
+
+  return (
+    <section className="score-panel" aria-labelledby="handle-score-title">
+      <div>
+        <p className="eyebrow">parent control tracker</p>
+        <h2 id="handle-score-title">Handle Security Score</h2>
+        <p>
+          Static planning score based on {completed} of {parentSafetyChecklist.length} safety
+          habits marked as ready.
+        </p>
+      </div>
+      <div className="score-meter" style={{ '--score': `${score}%` }}>
+        <strong>{score}%</strong>
+        <span>planning ready</span>
+      </div>
+    </section>
+  )
+}
+
+function HandlesPage() {
+  return (
+    <Shell>
+      <main>
+        <section className="handles-hero">
+          <p className="eyebrow">Handles</p>
+          <h1>Social Handle Tracker</h1>
+          <p className="lede">
+            “Parent-approved places to reserve the Wild Weird World name before launch.”
+          </p>
+          <div className="hero-actions">
+            <a href={OFFICIAL_URL}>Official domain: {OFFICIAL_DOMAIN}</a>
+          </div>
+        </section>
+
+        <section className="handle-patterns" aria-labelledby="handle-patterns-title">
+          <div className="section-heading">
+            <p className="eyebrow">recommended patterns</p>
+            <h2 id="handle-patterns-title">Brand handles to check first</h2>
+            <p className="section-note">Reserve brand/game handles, not personal child handles.</p>
+          </div>
+          <div className="handle-groups">
+            <div>
+              <h3>Primary</h3>
+              <div className="chips handle-chips">
+                {primaryHandlePatterns.map((handle) => (
+                  <span key={handle}>{handle}</span>
+                ))}
+              </div>
+            </div>
+            <div>
+              <h3>Game handle ideas</h3>
+              <div className="chips handle-chips">
+                {restoredHandlePatterns.map((handle) => (
+                  <span key={handle}>{handle}</span>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <HandleSecurityScore />
+
+        <section className="next-actions" aria-labelledby="next-actions-title">
+          <p className="eyebrow">Best next 3 actions</p>
+          <h2 id="next-actions-title">Do these before any launch planning.</h2>
+          <ol>
+            {bestNextActions.map((action) => (
+              <li key={action}>{action}</li>
+            ))}
+          </ol>
+        </section>
+
+        <HandleSection title="Secure First" />
+        <HandleSection title="Future Options" />
+        <HandleSection title="Avoid For Now" />
+
+        <section className="rule-grid" aria-label="Naming rules and parent safety checklist">
+          <article className="rules-card">
+            <p className="eyebrow">Naming Rules</p>
+            <h2>Naming Rules</h2>
+            <ul>
+              {namingRules.map((rule) => (
+                <li key={rule}>{rule}</li>
+              ))}
+            </ul>
+          </article>
+          <article className="rules-card">
+            <p className="eyebrow">Parent Safety Checklist</p>
+            <h2>Parent Safety Checklist</h2>
+            <ul>
+              {parentSafetyChecklist.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ul>
+          </article>
+        </section>
+      </main>
+    </Shell>
+  )
+}
+
+function PlanCard({ plan }) {
+  return (
+    <article className="plan-card">
+      <div className="platform-card-top">
+        <div>
+          <p className="eyebrow">{plan.status}</p>
+          <h3>{plan.name}</h3>
+        </div>
+        <span className={`status-chip ${plan.status.toLowerCase().replaceAll(' ', '-')}`}>
+          {plan.status}
+        </span>
+      </div>
+      <p>{plan.purpose}</p>
+      <a className="mockup-link" href="#add-mockup-link">
+        Add mockup link
+      </a>
+      <dl className="platform-details">
+        <div>
+          <dt>Next action</dt>
+          <dd>{plan.nextAction}</dd>
+        </div>
+      </dl>
+    </article>
+  )
+}
+
+function PlansPage() {
+  return (
+    <Shell>
+      <main>
+        <section className="plans-hero">
+          <p className="eyebrow">Plans</p>
+          <h1>WWW-HQ Plans & Mockups</h1>
+          <p className="lede">
+            “Founder-friendly blueprints for games, content, merch, and next updates.”
+          </p>
+        </section>
+
+        <section className="plans-board" aria-label="Plans and mockups board">
+          {planSections.map((section) => (
+            <article className="plans-section" key={section.title}>
+              <div className="section-heading">
+                <p className="eyebrow">planning lane</p>
+                <h2>{section.title}</h2>
+              </div>
+              <div className="plan-grid">
+                {section.cards.map((plan) => (
+                  <PlanCard plan={plan} key={plan.name} />
+                ))}
+              </div>
+            </article>
+          ))}
+        </section>
+      </main>
+    </Shell>
+  )
+}
+
+function BrandFooter() {
+  return (
+    <footer className="brand-footer">
+      Official domain: <a href={OFFICIAL_URL}>{OFFICIAL_DOMAIN}</a>
+    </footer>
+  )
+}
+
+function App() {
+  return (
+    <>
+      {isRoute('/ontology') ? (
+        <OntologyPage />
+      ) : isRoute('/handles') ? (
+        <HandlesPage />
+      ) : isRoute('/plans') ? (
+        <PlansPage />
+      ) : (
+        <Dashboard />
+      )}
+      <BrandFooter />
+    </>
+  )
+}
+
+export default App
