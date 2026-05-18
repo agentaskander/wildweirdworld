@@ -154,6 +154,20 @@ const dashboardCards = [
     href: '/dub-dub-dub',
   },
   {
+    title: 'Moss Hollow Studios',
+    eyebrow: 'Umbrella world',
+    emoji: '🌿',
+    text: 'Step into the cozy weird studio for frogs, lanterns, friendship, and game universes.',
+    href: '/moss-hollow-studios',
+  },
+  {
+    title: 'Creator Empire',
+    eyebrow: 'Friendship-first',
+    emoji: '📹',
+    text: 'Plan kid-safe videos, update logs, fan art, and creator confidence without vanity metrics.',
+    href: '/creator-empire',
+  },
+  {
     title: 'Ontology Builder',
     eyebrow: 'Reward badge',
     emoji: '🏅',
@@ -653,6 +667,188 @@ const duckRarities = [
   ['Golden Portal', 'Legendary ducks found only when the Golden Drain wakes up.'],
 ]
 
+const mossGameWorlds = [
+  {
+    title: 'Surviving the First Day of School',
+    icon: '🐸',
+    role: 'Social survival comedy',
+    summary:
+      'A weird school roleplay full of frog escapes, classroom pets, chaotic cafeteria events, bug club gossip, and a popularity meter that rewards kindness over clout.',
+    artPlaceholders: ['Locker sticker wall', 'Frog escape map', 'Cafeteria chaos board'],
+    systems: [
+      'school popularity meter',
+      'strange substitute teacher events',
+      'emotional/social roleplay choices',
+      'friend group rumors with safe outcomes',
+    ],
+    roadmap: ['Bug Club Week', 'Classroom Pet Rescue', 'Cafeteria Mystery Day'],
+    socialIdeas: ['first-day reaction clips', 'choose my desk sticker', 'frog hallway chase replay'],
+    archetypes: ['new kid hero', 'cafeteria legend', 'bug club founder', 'mysterious substitute'],
+  },
+  {
+    title: 'Spider Café',
+    icon: '🕷️',
+    role: 'Cute creepy cozy café',
+    summary:
+      'Players run a rainy terrarium café with bug pastries, frog tea, spider silk decorations, glowing drinks, odd creature customers, and collectible furniture.',
+    artPlaceholders: ['Rainy window booth', 'Silk menu board', 'Terrarium lounge layout'],
+    systems: ['bug pastry crafting', 'frog tea recipes', 'customer friendship stamps', 'furniture collecting'],
+    roadmap: ['Glow Drink Night', 'Terrarium Lounge Upgrade', 'Tiny Umbrella Furniture Set'],
+    socialIdeas: ['drink recipe reveals', 'cozy café tours', 'odd customer of the week'],
+    archetypes: ['gentle spider owner', 'frog tea regular', 'moth pastry critic', 'rainy window poet'],
+  },
+  {
+    title: 'Dumpster Raccoon Tycoon',
+    icon: '🦝',
+    role: 'Breakout chaos tycoon',
+    summary:
+      'Build a raccoon trash empire with shiny object collecting, dumpster upgrades, shopping cart vehicles, raccoon factions, pizza box artifacts, legendary dumpsters, and dance parties.',
+    artPlaceholders: ['Trash throne room', 'Shopping cart garage', 'Legendary dumpster showroom'],
+    systems: [
+      'raccoon kingdom building',
+      'shiny object economy',
+      'neighborhood raids with silly safe stakes',
+      'meme and emote collection',
+      'raccoon mafia factions as cartoon clubs',
+    ],
+    roadmap: ['Golden Pizza Box Event', 'Shopping Cart Grand Prix', 'Moonlight Dumpster Dance Party'],
+    socialIdeas: ['raccoon dance emotes', 'before/after dumpster upgrades', 'legendary trash pull reactions'],
+    archetypes: ['chaos CEO', 'pizza box historian', 'cart racer', 'trash empire decorator'],
+    viralFeatures: [
+      'one-button raccoon dance party',
+      'rare shiny object reveal clips',
+      'shopping cart wipeout moments',
+      'legendary dumpster opening animations',
+      'custom trash palace tours',
+    ],
+  },
+  {
+    title: 'Snail Mail Club',
+    icon: '🐌',
+    role: 'Soft friendship sim',
+    summary:
+      'Magical letters, customizable snail homes, cozy gardens, gift exchanges, sticker collections, and emotional support mechanics built around gentle friendship.',
+    artPlaceholders: ['Snail mailbox village', 'Sticker garden path', 'Letter-writing nook'],
+    systems: ['magical letters', 'friendship gifts', 'snail home decorating', 'supportive note prompts'],
+    roadmap: ['Garden Pen Pal Week', 'Sticker Swap Day', 'Moonlit Mail Route'],
+    socialIdeas: ['letter reveal templates', 'snail home tours', 'kindness prompt cards'],
+    archetypes: ['mail carrier', 'garden friend', 'sticker collector', 'quiet comfort buddy'],
+  },
+  {
+    title: 'Midnight Zoo',
+    icon: '🦇',
+    role: 'Flagship wonder world',
+    summary:
+      'A nighttime zoo of glowing creatures, lantern bats, moss deer, moon foxes, magical aquarium tunnels, cave systems, hidden lore, and comforting mystery.',
+    artPlaceholders: ['Lantern bat aviary', 'Moon fox trail', 'Aquarium tunnel glow map'],
+    systems: ['nighttime weather', 'ambient music concepts', 'hidden lore fragments', 'creature care rituals'],
+    roadmap: ['Rain Lantern Festival', 'Moon Fox Trail', 'Cave Aquarium Expansion'],
+    socialIdeas: ['creature reveal shorts', 'night walk clips', 'lantern naming polls'],
+    archetypes: ['quiet guide', 'glowing keeper', 'lost moon fox', 'lantern bat friend'],
+  },
+  {
+    title: 'Frog Camp',
+    icon: '🐸',
+    role: 'Summer swamp adventure',
+    summary:
+      'Creature collecting, swamp canoe races, bug hunts, campfire stories, hidden cryptids, friendship cabins, summer events, and badge achievements.',
+    artPlaceholders: ['Cabin sticker board', 'Canoe race creek', 'Campfire cryptid poster'],
+    systems: ['badge achievements', 'friendship cabins', 'safe bug hunts', 'cryptid clue trails'],
+    roadmap: ['Canoe Cup', 'Cryptid Campfire Week', 'Cabin Badge Board'],
+    socialIdeas: ['camp badge reveals', 'canoe race clips', 'cryptid clue guesses'],
+    archetypes: ['camp counselor frog', 'badge collector', 'cryptid spotter', 'canoe champion'],
+  },
+  {
+    title: 'Webcore High',
+    icon: '🕸️',
+    role: 'Future flagship social RP',
+    summary:
+      'A weird cozy expressive school with neon rainy hallways, internet-culture creature clubs, glowing vending machines, hidden rooms, emotional roleplay, outfits, and lore-heavy atmosphere.',
+    artPlaceholders: ['Neon hallway mood board', 'Glowing vending machine', 'Hidden club room map'],
+    systems: ['style/outfit identity', 'creature clubs', 'emotional roleplay systems', 'secret room lore'],
+    roadmap: ['Rainy Hallway Launch', 'Creature Club Fair', 'Hidden Room Season'],
+    socialIdeas: ['outfit transitions', 'club invite clips', 'mysterious vending machine pulls'],
+    archetypes: ['neon hallway poet', 'club founder', 'vending machine oracle', 'quiet lore hunter'],
+  },
+]
+
+const mossMascots = [
+  {
+    name: 'Mossy',
+    icon: '🐸',
+    role: 'Main frog mascot',
+    personality: 'Kind, curious, a little nervous, but always first to say hello.',
+    lore: 'Mossy keeps the studio lantern lit and knows which puddles lead to new worlds.',
+    visualNotes: 'Soft green hoodie, leaf backpack, tiny lantern charm, sticker-covered notebook.',
+    favoriteItems: ['moss lantern', 'bug sticker book', 'warm cocoa lily pad'],
+    dialogue: ['“We can be brave, but tiny.”', '“That puddle looks suspiciously magical.”'],
+    merch: 'Plush frog, sticker sheet, lantern pin, notebook cover.',
+  },
+  {
+    name: 'Binx',
+    icon: '🦝',
+    role: 'Trash raccoon chaos CEO',
+    personality: 'Loud, funny, brilliant at turning junk into treasure.',
+    lore: 'Binx founded the first trash palace after finding a golden pizza box at midnight.',
+    visualNotes: 'Tiny crown, snack cape, shopping cart keys, shiny object sash.',
+    favoriteItems: ['pizza box artifacts', 'bottle-cap medals', 'shopping cart wheels'],
+    dialogue: ['“Trash? No. Future empire.”', '“Everybody dance. The dumpster is legendary.”'],
+    merch: 'Meme stickers, emote pack, trash crown keychain, dance party shirt.',
+  },
+  {
+    name: 'Velvet',
+    icon: '🕷️',
+    role: 'Spider Café owner',
+    personality: 'Gentle, stylish, calm during chaos, secretly very funny.',
+    lore: 'Velvet built a café where even spooky-looking friends get a warm cup of frog tea.',
+    visualNotes: 'Silk apron, rain boots, tiny teacup tray, glowing thread decorations.',
+    favoriteItems: ['frog tea', 'bug pastries', 'silk garlands'],
+    dialogue: ['“Cute creepy is still cozy.”', '“One glowing tea for your weird little day.”'],
+    merch: 'Café apron, recipe cards, spider silk sticker borders, tea cup charm.',
+  },
+  {
+    name: 'Luma',
+    icon: '🦇',
+    role: 'Midnight Zoo guide',
+    personality: 'Soft-spoken, mysterious, protective, loves quiet wonder.',
+    lore: 'Luma guides visitors through glowing habitats and tells stories only lanterns remember.',
+    visualNotes: 'Lantern wings, moon-map scarf, star freckles, aquarium-glow badge.',
+    favoriteItems: ['moon maps', 'glow berries', 'rain lanterns'],
+    dialogue: ['“Walk softly. The moon foxes are listening.”', '“Mystery can feel like home.”'],
+    merch: 'Glow pin, lantern plush, moon fox map poster, nighttime sticker sheet.',
+  },
+  {
+    name: 'Postie',
+    icon: '🐌',
+    role: 'Snail mail carrier',
+    personality: 'Patient, warm, emotionally wise, never rushes a good note.',
+    lore: 'Postie carries letters that arrive exactly when a friend needs them.',
+    visualNotes: 'Mail satchel shell, flower stamps, tiny glasses, garden boots.',
+    favoriteItems: ['friendship stamps', 'pressed flowers', 'cozy mail routes'],
+    dialogue: ['“Slow mail still gets there.”', '“A kind note can be a tiny blanket.”'],
+    merch: 'Stamp stickers, letter kit, shell backpack charm, garden postcard set.',
+  },
+]
+
+const studioPrinciples = [
+  ['Safe weirdness', 'Strange should feel inviting, not scary. Every odd creature has a soft place to land.'],
+  ['Animal-first storytelling', 'Creatures are not props; they carry feelings, friendships, jokes, and secrets.'],
+  ['Friendship-driven gameplay', 'The best win condition is helping someone feel included.'],
+  ['Creativity over competition', 'Players decorate, roleplay, collect, and tell stories before chasing ranks.'],
+  ['Cozy chaos', 'Funny mess is welcome when it stays safe, kind, and imaginative.'],
+]
+
+const creatorEmpirePillars = [
+  ['Videos', 'Short parent-approved clips that show worlds, characters, updates, and funny moments.'],
+  ['Shorts', 'Tiny scene ideas, mascot reactions, outfit reveals, and creature discoveries.'],
+  ['Fan art', 'Safe prompts for friends to draw mascots, stickers, and cozy weird rooms.'],
+  ['Roleplay clips', 'Small story scenes focused on friendship, feelings, and funny choices.'],
+  ['Update logs', 'Creator confidence notes about what changed and what was learned.'],
+  ['Friend screenshots', 'Parent-approved, no personal details, shared only when safe.'],
+  ['Social sharing', 'Brand-first sharing with parent review and no public DMs.'],
+  ['Audience/community', 'A kindness-first circle, not a popularity contest.'],
+]
+
 function currentRoute() {
   return window.location.pathname.replace(/\/$/, '') || '/'
 }
@@ -670,6 +866,12 @@ function Navigation() {
       <a className={isRoute('/dub-dub-dub') ? 'active' : undefined} href="/dub-dub-dub">
         Dub Dub Dub
       </a>
+      <a
+        className={isRoute('/moss-hollow-studios') ? 'active' : undefined}
+        href="/moss-hollow-studios"
+      >
+        Moss Hollow
+      </a>
       <a className={isRoute('/ontology') ? 'active' : undefined} href="/ontology">
         Ontology
       </a>
@@ -678,6 +880,9 @@ function Navigation() {
       </a>
       <a className={isRoute('/plans') ? 'active' : undefined} href="/plans">
         Plans
+      </a>
+      <a className={isRoute('/creator-empire') ? 'active' : undefined} href="/creator-empire">
+        Creator Empire
       </a>
     </nav>
   )
@@ -735,6 +940,7 @@ function Dashboard() {
             <a href="/ontology">Open Ontology</a>
             <a href="/handles">Secure creator handles</a>
             <a href="/plans">Open plans & mockups</a>
+            <a href="/moss-hollow-studios">Enter Moss Hollow</a>
             <a href={OFFICIAL_URL}>Official domain</a>
             <span>Local port {PORT}</span>
           </div>
@@ -1304,6 +1510,210 @@ function PlansPage() {
   )
 }
 
+function MossGameCard({ game }) {
+  return (
+    <article className="moss-game-card">
+      <span className="dub-icon" aria-hidden="true">
+        {game.icon}
+      </span>
+      <p className="eyebrow">{game.role}</p>
+      <h3>{game.title}</h3>
+      <p>{game.summary}</p>
+      <div className="moss-mini-grid">
+        <div>
+          <strong>Concept art placeholders</strong>
+          <ul>
+            {game.artPlaceholders.map((item) => (
+              <li key={item}>{item}</li>
+            ))}
+          </ul>
+        </div>
+        <div>
+          <strong>Systems</strong>
+          <ul>
+            {game.systems.map((item) => (
+              <li key={item}>{item}</li>
+            ))}
+          </ul>
+        </div>
+        <div>
+          <strong>Future update roadmap</strong>
+          <ul>
+            {game.roadmap.map((item) => (
+              <li key={item}>{item}</li>
+            ))}
+          </ul>
+        </div>
+        <div>
+          <strong>Social gameplay ideas</strong>
+          <ul>
+            {game.socialIdeas.map((item) => (
+              <li key={item}>{item}</li>
+            ))}
+          </ul>
+        </div>
+        <div>
+          <strong>Character archetypes</strong>
+          <ul>
+            {game.archetypes.map((item) => (
+              <li key={item}>{item}</li>
+            ))}
+          </ul>
+        </div>
+      </div>
+      {game.viralFeatures ? (
+        <div className="viral-feature-box">
+          <strong>Potential Viral Features</strong>
+          <div className="chips">
+            {game.viralFeatures.map((feature) => (
+              <span key={feature}>{feature}</span>
+            ))}
+          </div>
+        </div>
+      ) : null}
+    </article>
+  )
+}
+
+function MascotCard({ mascot }) {
+  return (
+    <article className="mascot-card">
+      <span className="dub-icon" aria-hidden="true">
+        {mascot.icon}
+      </span>
+      <p className="eyebrow">{mascot.role}</p>
+      <h3>{mascot.name}</h3>
+      <p>{mascot.personality}</p>
+      <dl className="platform-details">
+        <div>
+          <dt>Lore</dt>
+          <dd>{mascot.lore}</dd>
+        </div>
+        <div>
+          <dt>Visual notes</dt>
+          <dd>{mascot.visualNotes}</dd>
+        </div>
+        <div>
+          <dt>Favorite items</dt>
+          <dd>{mascot.favoriteItems.join(', ')}</dd>
+        </div>
+        <div>
+          <dt>Dialogue examples</dt>
+          <dd>{mascot.dialogue.join(' / ')}</dd>
+        </div>
+        <div>
+          <dt>Future merch potential</dt>
+          <dd>{mascot.merch}</dd>
+        </div>
+      </dl>
+    </article>
+  )
+}
+
+function MossHollowStudiosPage() {
+  return (
+    <Shell>
+      <main className="moss-page">
+        <section className="moss-hero">
+          <p className="eyebrow">Studio umbrella</p>
+          <h1>🌿 Moss Hollow Studios</h1>
+          <p className="lede">
+            A mossy, glowing, rain-soft studio for weird cozy animals, friendship stories, social
+            roleplay, frogs, raccoons, spiders, lantern creatures, and handmade worlds.
+          </p>
+          <div className="hero-actions">
+            <a href="#moss-portfolio">Explore the portfolio</a>
+            <a href="/creator-empire">Build the creator empire</a>
+          </div>
+        </section>
+
+        <section className="moss-overview">
+          <div>
+            <p className="eyebrow">Emotional identity</p>
+            <h2>Safe weirdness, soft mystery, and friendship-first play.</h2>
+          </div>
+          <p>
+            Moss Hollow Studios should feel like a doodlebook found under a rainy porch: handmade
+            signs, bug jars, terrariums, nighttime lanterns, mossy paths, cozy chaos, and strange
+            animal friends who make creativity feel safe.
+          </p>
+        </section>
+
+        <section className="studio-principles" aria-label="Moss Hollow design principles">
+          {studioPrinciples.map(([title, text]) => (
+            <article key={title}>
+              <h3>{title}</h3>
+              <p>{text}</p>
+            </article>
+          ))}
+        </section>
+
+        <section id="moss-portfolio" className="moss-section" aria-labelledby="moss-portfolio-title">
+          <div className="section-heading">
+            <p className="eyebrow">Additive portfolio expansion</p>
+            <h2 id="moss-portfolio-title">Game universe pages and lore boards</h2>
+          </div>
+          <div className="moss-game-grid">
+            {mossGameWorlds.map((game) => (
+              <MossGameCard game={game} key={game.title} />
+            ))}
+          </div>
+        </section>
+
+        <section className="moss-section" aria-labelledby="mascot-system-title">
+          <div className="section-heading">
+            <p className="eyebrow">Recurring mascot system</p>
+            <h2 id="mascot-system-title">Studio characters that can travel between worlds</h2>
+          </div>
+          <div className="mascot-grid">
+            {mossMascots.map((mascot) => (
+              <MascotCard mascot={mascot} key={mascot.name} />
+            ))}
+          </div>
+        </section>
+      </main>
+    </Shell>
+  )
+}
+
+function CreatorEmpirePage() {
+  return (
+    <Shell>
+      <main className="creator-page">
+        <section className="creator-hero">
+          <p className="eyebrow">Kid-safe creator strategy</p>
+          <h1>Build Your Own Weird Creature Creator Empire</h1>
+          <p className="lede">
+            A friendship-first plan for videos, shorts, fan art, roleplay clips, update logs, and
+            creator confidence without chasing vanity metrics.
+          </p>
+        </section>
+
+        <section className="creator-grid" aria-label="Creator empire planning pillars">
+          {creatorEmpirePillars.map(([title, text]) => (
+            <article key={title}>
+              <h2>{title}</h2>
+              <p>{text}</p>
+            </article>
+          ))}
+        </section>
+
+        <section className="moss-overview">
+          <div>
+            <p className="eyebrow">Community promise</p>
+            <h2>Creativity and friendship come first.</h2>
+          </div>
+          <p>
+            The goal is not to look popular. The goal is to keep making worlds, sharing safe little
+            stories, celebrating friend feedback, and growing confidence one cozy weird update at a
+            time.
+          </p>
+        </section>
+      </main>
+    </Shell>
+  )
+}
+
 function BrandFooter() {
   return (
     <footer className="brand-footer">
@@ -1321,6 +1731,10 @@ function App() {
         <HandlesPage />
       ) : isRoute('/dub-dub-dub') ? (
         <DubDubDubPage />
+      ) : isRoute('/moss-hollow-studios') ? (
+        <MossHollowStudiosPage />
+      ) : isRoute('/creator-empire') ? (
+        <CreatorEmpirePage />
       ) : isRoute('/plans') ? (
         <PlansPage />
       ) : (

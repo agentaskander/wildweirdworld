@@ -651,6 +651,150 @@ main {
   color: var(--accent);
 }
 
+.moss-page,
+.creator-page {
+  background:
+    radial-gradient(circle at 12% 10%, rgba(127, 210, 131, 0.2), transparent 24%),
+    radial-gradient(circle at 84% 16%, rgba(255, 214, 102, 0.16), transparent 23%),
+    linear-gradient(180deg, rgba(24, 47, 34, 0.04), transparent 420px);
+}
+
+.moss-hero,
+.creator-hero,
+.moss-overview,
+.moss-section {
+  border: 1px solid rgba(87, 130, 77, 0.28);
+  border-radius: 8px;
+  padding: clamp(24px, 5vw, 58px);
+  background:
+    radial-gradient(circle at 12% 18%, rgba(185, 255, 166, 0.2), transparent 28%),
+    radial-gradient(circle at 86% 12%, rgba(255, 236, 150, 0.2), transparent 25%),
+    var(--panel);
+  box-shadow: 0 18px 50px rgba(38, 74, 48, 0.1);
+}
+
+.moss-hero,
+.creator-hero {
+  min-height: 430px;
+  display: grid;
+  align-content: center;
+  background:
+    linear-gradient(rgba(12, 35, 25, 0.2), rgba(255, 253, 248, 0.72)),
+    radial-gradient(circle at 18% 22%, rgba(132, 225, 139, 0.38), transparent 26%),
+    radial-gradient(circle at 78% 16%, rgba(255, 214, 102, 0.38), transparent 24%),
+    linear-gradient(145deg, #dff4d8, #e7f7ff 54%, #fff1b8);
+  position: relative;
+  overflow: hidden;
+}
+
+.moss-hero::before,
+.creator-hero::before {
+  content: '✦ ✧ ✦';
+  position: absolute;
+  right: 28px;
+  top: 22px;
+  color: rgba(37, 126, 100, 0.4);
+  font-size: 2rem;
+  letter-spacing: 0.4em;
+}
+
+.moss-overview {
+  display: grid;
+  grid-template-columns: minmax(220px, 0.8fr) minmax(0, 1.2fr);
+  gap: 22px;
+  text-align: left;
+}
+
+.moss-overview p {
+  color: var(--text);
+  font-size: 1.05rem;
+  font-weight: 800;
+}
+
+.studio-principles,
+.creator-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+}
+
+.studio-principles article,
+.creator-grid article,
+.moss-game-card,
+.mascot-card {
+  border: 1px solid rgba(87, 130, 77, 0.24);
+  border-radius: 8px;
+  padding: 18px;
+  background:
+    radial-gradient(circle at 14% 12%, rgba(255, 255, 255, 0.5), transparent 24%),
+    linear-gradient(160deg, rgba(232, 249, 222, 0.92), rgba(255, 253, 248, 0.94));
+  text-align: left;
+  box-shadow: 0 12px 30px rgba(38, 74, 48, 0.08);
+}
+
+.studio-principles h3,
+.creator-grid h2,
+.moss-game-card h3,
+.mascot-card h3 {
+  color: var(--text-h);
+}
+
+.studio-principles p,
+.creator-grid p,
+.moss-game-card p,
+.mascot-card p {
+  color: var(--text);
+  font-weight: 750;
+}
+
+.moss-game-grid,
+.mascot-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 14px;
+}
+
+.moss-game-card {
+  min-height: 560px;
+}
+
+.moss-mini-grid {
+  display: grid;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.moss-mini-grid div,
+.viral-feature-box {
+  border-top: 1px solid rgba(87, 130, 77, 0.18);
+  padding-top: 10px;
+}
+
+.moss-mini-grid strong,
+.viral-feature-box strong {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--accent);
+  font-size: 0.78rem;
+  text-transform: uppercase;
+}
+
+.moss-mini-grid ul {
+  display: grid;
+  gap: 4px;
+  margin: 0;
+  padding-left: 18px;
+  color: var(--text);
+}
+
+.viral-feature-box {
+  margin-top: 14px;
+}
+
+.mascot-card {
+  min-height: 480px;
+}
+
 .dub-page {
   background:
     radial-gradient(circle at 12% 6%, rgba(92, 245, 255, 0.18), transparent 20%),
@@ -1075,6 +1219,7 @@ main {
   .dub-lore,
   .dub-gameplay,
   .www-connection,
+  .moss-overview,
   .score-panel,
   .rule-grid {
     grid-template-columns: 1fr;
