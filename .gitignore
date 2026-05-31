@@ -12,6 +12,8 @@ dist
 dist-ssr
 *.local
 private/
+zones/private/
+zones/internal/
 *.private.md
 handles.private.md
 
