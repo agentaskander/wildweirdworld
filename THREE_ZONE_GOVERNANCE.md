@@ -6,6 +6,11 @@ WWW-HQ uses three separate zones so public publishing stays safe while private a
 
 The public zone is the SEO-safe website deployed to `wildweirdworld.com`.
 
+Local public URL: `http://127.0.0.1:3195/`
+Script: `npm run dev`
+Build: `npm run build`
+Deploy artifact: `dist/` only
+
 Public content may include:
 
 - Game pages
@@ -30,11 +35,21 @@ The private zone is a local/private preview and demo area. It is not public, not
 
 Private files live under `private/` or `zones/private/` and are ignored by git.
 
+Local private URL: `http://127.0.0.1:3196/`
+Script: `npm run private`
+Purpose: gated/local private preview
+
 ## 3. INTERNAL
 
 The internal zone is the full private ops, admin, and reference area. It must preserve operational notes, handle archives, claiming checklists, status notes, and planning references. It is never deployed publicly.
 
 Internal files live under `private/internal-site/` or `zones/internal/` and are ignored by git.
+
+Local internal URL: `http://127.0.0.1:3197/`
+Script: `npm run internal`
+Purpose: full command center and reference surface
+
+The public port `3195` is never reused for internal or private operations. Internal handle archives, claiming plans, notes, and checklists must never enter `src/`, `public/`, `dist/`, the sitemap, or the public React routes.
 
 ## Deployment Rule
 

@@ -7,6 +7,8 @@
     "dev": "vite --host 127.0.0.1 --port 3195 --strictPort",
     "build": "vite build",
     "lint": "eslint .",
+    "private": "node scripts/serve-private-www-hq.mjs",
+    "internal": "node scripts/serve-internal-www-hq.mjs",
     "preview": "vite preview --host 127.0.0.1 --port 3195 --strictPort"
   },
   "dependencies": {
