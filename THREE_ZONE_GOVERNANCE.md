@@ -6,7 +6,8 @@ WWW-HQ uses three separate zones so public publishing stays safe while private a
 
 The public zone is the SEO-safe website deployed to `wildweirdworld.com`.
 
-Local public URL: `http://127.0.0.1:3195/`
+Live public URL: `https://www.wildweirdworld.com`
+Local public preview URL: `http://127.0.0.1:3197/`
 Script: `npm run dev`
 Build: `npm run build`
 Deploy artifact: `dist/` only
@@ -45,11 +46,21 @@ The internal zone is the full private ops, admin, and reference area. It must pr
 
 Internal files live under `private/internal-site/` or `zones/internal/` and are ignored by git.
 
-Local internal URL: `http://127.0.0.1:3197/`
+Local internal URL: `http://127.0.0.1:3195/`
 Script: `npm run internal`
 Purpose: full command center and reference surface
 
-The public port `3195` is never reused for internal or private operations. Internal handle archives, claiming plans, notes, and checklists must never enter `src/`, `public/`, `dist/`, the sitemap, or the public React routes.
+Port `3195` is reserved for the original internal WWW-HQ site. It is not the bookmarks page and it is not the public local preview. Internal handle archives, claiming plans, notes, and checklists must never enter public `src/`, `public/`, `dist/`, the sitemap, or the public React routes.
+
+## Bookmarks
+
+The bookmarks/control page is served from:
+
+```text
+http://192.168.1.166:8000/codex/platform/app-bookmarks.html
+```
+
+Bookmarks must not be assigned to `3195`.
 
 ## Deployment Rule
 

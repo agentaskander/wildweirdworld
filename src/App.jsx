@@ -60,7 +60,7 @@ import {
   getRelatedEntities,
 } from './data/entityGraph'
 
-const PORT = 3195
+const PORT = 3197
 const OFFICIAL_DOMAIN = 'wildweirdworld.com'
 const OFFICIAL_URL = `https://${OFFICIAL_DOMAIN}`
 const schemaKey = (name) => `@${name}`
