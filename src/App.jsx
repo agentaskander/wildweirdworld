@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import './App.css'
 import {
   hollowCoastBooks,
@@ -945,8 +945,57 @@ function isRoute(route) {
 }
 
 function Navigation() {
+  const [isNavHidden, setIsNavHidden] = useState(false)
+  const lastScrollY = useRef(0)
+
+  useEffect(() => {
+    const mobileQuery = window.matchMedia('(max-width: 720px)')
+
+    const shouldKeepVisible = () => {
+      const activeElement = document.activeElement
+      return Boolean(activeElement?.closest?.('.top-nav'))
+    }
+
+    const updateNavVisibility = () => {
+      if (!mobileQuery.matches) {
+        setIsNavHidden(false)
+        lastScrollY.current = window.scrollY
+        return
+      }
+
+      const nextScrollY = window.scrollY
+      const scrollingDown = nextScrollY > lastScrollY.current
+      const nearTop = nextScrollY < 80
+
+      if (nearTop || shouldKeepVisible()) {
+        setIsNavHidden(false)
+      } else {
+        setIsNavHidden(scrollingDown)
+      }
+
+      lastScrollY.current = nextScrollY
+    }
+
+    lastScrollY.current = window.scrollY
+    updateNavVisibility()
+    window.addEventListener('scroll', updateNavVisibility, { passive: true })
+    window.addEventListener('resize', updateNavVisibility)
+    document.addEventListener('focusin', updateNavVisibility)
+
+    return () => {
+      window.removeEventListener('scroll', updateNavVisibility)
+      window.removeEventListener('resize', updateNavVisibility)
+      document.removeEventListener('focusin', updateNavVisibility)
+    }
+  }, [])
+
+  const navStateClass = isNavHidden ? 'nav-hidden' : 'nav-visible'
+
   return (
-    <nav className="top-nav" aria-label="Wild Weird World HQ navigation">
+    <nav
+      className={`top-nav mobile-auto-nav ${navStateClass}`}
+      aria-label="Wild Weird World HQ navigation"
+    >
       <a className={isRoute('/') ? 'active' : undefined} href="/">
         Dashboard
       </a>
