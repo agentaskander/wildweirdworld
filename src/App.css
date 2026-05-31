@@ -103,13 +103,14 @@ main {
   min-height: 42px;
   display: inline-flex;
   align-items: center;
-  border: 1px solid var(--accent-border);
+  border: 1px solid rgba(18, 32, 25, 0.28);
   border-radius: 999px;
   padding: 8px 14px;
-  background: rgba(255, 255, 255, 0.72);
+  background: rgba(255, 253, 248, 0.92);
   color: var(--text-h);
   font-weight: 900;
   text-decoration: none;
+  box-shadow: 0 6px 18px rgba(18, 32, 25, 0.08);
 }
 
 .card-grid,
@@ -172,12 +173,87 @@ main {
   display: inline-flex;
   align-items: center;
   margin-top: 16px;
-  border: 1px solid var(--accent-border);
+  border: 1px solid rgba(18, 32, 25, 0.24);
   border-radius: 999px;
   padding: 6px 12px;
-  color: var(--accent);
+  background: rgba(255, 253, 248, 0.9);
+  color: #165f49;
   font-weight: 900;
   text-decoration: none;
+}
+
+.hero-panel,
+.ontology-hero,
+.handles-hero,
+.plans-hero,
+.seo-hero,
+.moss-hero,
+.creator-hero,
+.dub-hero,
+.hollow-hero,
+.queen-hero,
+.clobot-hero {
+  position: relative;
+  isolation: isolate;
+  background-blend-mode: multiply, multiply, normal;
+  box-shadow:
+    inset 0 0 0 999px rgba(255, 253, 248, 0.16),
+    0 18px 50px rgba(18, 32, 25, 0.08);
+}
+
+.hero-panel::before,
+.ontology-hero::before,
+.handles-hero::before,
+.plans-hero::before,
+.seo-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(180deg, rgba(255, 253, 248, 0.48), rgba(255, 253, 248, 0.28));
+  pointer-events: none;
+}
+
+.hero-panel h1,
+.hero-panel h2,
+.ontology-hero h1,
+.ontology-hero h2,
+.handles-hero h1,
+.handles-hero h2,
+.plans-hero h1,
+.plans-hero h2,
+.seo-hero h1,
+.seo-hero h2,
+.moss-hero h1,
+.moss-hero h2,
+.creator-hero h1,
+.creator-hero h2,
+.dub-hero h1,
+.dub-hero h2,
+.hollow-hero h1,
+.hollow-hero h2,
+.queen-hero h1,
+.queen-hero h2,
+.clobot-hero h1,
+.clobot-hero h2 {
+  color: var(--text-h);
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.9), 0 10px 24px rgba(18, 32, 25, 0.12);
+}
+
+.hero-panel .lede,
+.ontology-hero .lede,
+.handles-hero .lede,
+.plans-hero .lede,
+.seo-hero .lede,
+.moss-hero .lede,
+.creator-hero .lede,
+.dub-hero .lede,
+.hollow-hero .lede,
+.queen-hero .lede,
+.clobot-hero .lede {
+  color: #26342d;
+  font-weight: 850;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.78);
 }
 
 .flow-map {
@@ -1107,6 +1183,17 @@ main {
   position: relative;
   z-index: 2;
   text-align: left;
+}
+
+.dub-hero-copy,
+.queen-hero-copy,
+.clobot-hero > div:first-child,
+.hollow-hero > div:first-child {
+  border: 1px solid rgba(18, 32, 25, 0.12);
+  border-radius: 8px;
+  padding: clamp(18px, 3vw, 28px);
+  background: rgba(255, 253, 248, 0.76);
+  backdrop-filter: blur(8px);
 }
 
 .dub-hero-copy .lede {
@@ -2585,6 +2672,129 @@ main {
   }
 }
 
+@media (max-width: 720px) {
+  .top-nav {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 4px;
+    align-items: stretch;
+    justify-content: stretch;
+    padding: 6px;
+  }
+
+  .top-nav a {
+    min-height: 34px;
+    justify-content: center;
+    border-color: rgba(18, 32, 25, 0.12);
+    padding: 4px 6px;
+    font-size: 0.76rem;
+    line-height: 1.05;
+    text-align: center;
+  }
+
+  main {
+    gap: 12px;
+    padding: 12px;
+  }
+
+  .hero-panel,
+  .ontology-hero,
+  .handles-hero,
+  .plans-hero,
+  .seo-hero,
+  .moss-hero,
+  .creator-hero,
+  .dub-hero,
+  .hollow-hero,
+  .queen-hero,
+  .clobot-hero {
+    min-height: auto;
+    padding: clamp(18px, 6vw, 30px);
+  }
+
+  .hero-actions {
+    gap: 6px;
+    margin-top: 14px;
+  }
+
+  .hero-actions a,
+  .hero-actions span {
+    min-height: 34px;
+    padding: 5px 9px;
+    font-size: 0.82rem;
+  }
+
+  .dub-hero-copy,
+  .queen-hero-copy,
+  .clobot-hero > div:first-child,
+  .hollow-hero > div:first-child {
+    padding: 16px;
+  }
+}
+
+@media (max-width: 430px) {
+  .top-nav {
+    max-height: 35vh;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 3px;
+    padding: 4px;
+  }
+
+  .top-nav a {
+    min-height: 30px;
+    padding: 3px 4px;
+    border-radius: 8px;
+    font-size: 0.68rem;
+    font-weight: 850;
+  }
+
+  main {
+    gap: 10px;
+    padding: 10px;
+  }
+
+  .hero-panel,
+  .ontology-hero,
+  .handles-hero,
+  .plans-hero,
+  .seo-hero,
+  .moss-hero,
+  .creator-hero,
+  .dub-hero,
+  .hollow-hero,
+  .queen-hero,
+  .clobot-hero {
+    margin-top: 0;
+    padding: 18px 14px;
+  }
+
+  .hero-actions {
+    gap: 5px;
+    margin-top: 12px;
+  }
+
+  .hero-actions a,
+  .hero-actions span {
+    min-height: 32px;
+    padding: 4px 8px;
+    font-size: 0.76rem;
+  }
+
+  .seo-core-links {
+    gap: 5px;
+    margin-top: 14px;
+  }
+
+  .seo-core-links a,
+  .article-links a {
+    min-height: 32px;
+    padding: 4px 8px;
+    font-size: 0.76rem;
+  }
+}
+
 @media (max-width: 860px) {
   main {
     padding: 14px;
@@ -2664,5 +2874,19 @@ main {
     top: auto;
     bottom: -8px;
     transform: translate(50%, 50%);
+  }
+}
+
+@media (max-width: 720px) {
+  main {
+    gap: 12px;
+    padding: 12px;
+  }
+}
+
+@media (max-width: 430px) {
+  main {
+    gap: 10px;
+    padding: 10px;
   }
 }
