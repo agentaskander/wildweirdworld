@@ -11,7 +11,7 @@ import {
   hollowCoastRealms,
   hollowCoastRobloxHooks,
   hollowCoastSocialIdeas,
-  hollowCoastStoryThreads,
+  hollowCoastStoryLines,
 } from './data/stories/hollowCoast'
 import {
   queenJellyCharacters,
@@ -63,6 +63,7 @@ import {
 const PORT = 3195
 const OFFICIAL_DOMAIN = 'wildweirdworld.com'
 const OFFICIAL_URL = `https://${OFFICIAL_DOMAIN}`
+const schemaKey = (name) => `@${name}`
 
 const ontologyDomains = [
   {
@@ -192,11 +193,10 @@ const dashboardCards = [
     href: OFFICIAL_URL,
   },
   {
-    title: 'Secure creator handles',
-    eyebrow: 'Parent planning',
+    title: 'Official social links',
+    eyebrow: 'Launch safety',
     emoji: '🔐',
-    text: 'Track parent-approved account reservations before launch, with no posting automation.',
-    href: '/handles',
+    text: 'Official social links will be added after launch.',
   },
   {
     title: 'Open plans & mockups',
@@ -287,244 +287,6 @@ const universeLinks = [
 const ontologyFlowChains = [
   ['Universe', 'Games', 'Characters', 'Content', 'Practice Merch', 'Friend Feedback', 'Next Update'],
   ['Safety', 'Parent Approval', 'Launch Readiness'],
-]
-
-const handlePatterns = [
-  '@WildWeirdWorld',
-  '@WildWeirdWorldHQ',
-  '@WildWeirdWorldKids',
-  '@ZooQueenHQ',
-  '@WeirdCritterCafe',
-  '@ZooQueenCommand',
-  '@MiniZooMogul',
-  '@DaddyLongLegsDetective',
-  '@PetCafeRescue',
-  '@FrogFashionRunway',
-  '@CritterRescueSleepover',
-  '@AnimalInfluencerAcademy',
-  '@FirstDaySurvivor',
-  '@SpiderSilkSmoothie',
-]
-
-const primaryHandlePatterns = handlePatterns.slice(0, 5)
-const restoredHandlePatterns = handlePatterns.slice(5)
-
-const platformCards = [
-  {
-    section: 'Secure First',
-    platform: 'Domain',
-    priority: 'Secured',
-    suggestedHandle: OFFICIAL_DOMAIN,
-    why: 'Official home base for Wild Weird World when parent-approved publishing begins.',
-    parentOwner: 'Parent-owned',
-    safety: 'Parent manages domain, DNS, and publishing.',
-    status: 'Secured',
-    nextStep: 'Keep renewal, DNS, and publishing access in the parent password manager.',
-  },
-  {
-    section: 'Secure First',
-    platform: 'YouTube',
-    priority: 'Secure Now',
-    suggestedHandle: '@WildWeirdWorldHQ',
-    why: 'Best home for game trailers, safe project updates, and parent-approved videos.',
-    parentOwner: 'Parent-owned brand channel',
-    safety: 'No public DMs; comments off or parent-reviewed.',
-    status: 'Not checked',
-    nextStep: 'Check handle and reserve with parent recovery email.',
-  },
-  {
-    section: 'Secure First',
-    platform: 'TikTok',
-    priority: 'Secure Now',
-    suggestedHandle: '@WildWeirdWorldHQ',
-    why: 'Protects the brand name before short videos are planned.',
-    parentOwner: 'Parent-owned placeholder only',
-    safety: 'No posting unless parent approves; no DMs.',
-    status: 'Not checked',
-    nextStep: 'Reserve only; keep account private until launch plan is approved.',
-  },
-  {
-    section: 'Secure First',
-    platform: 'Instagram',
-    priority: 'Secure Now',
-    suggestedHandle: '@WildWeirdWorld',
-    why: 'Useful for character reveals, art, and parent-approved behind-the-scenes posts.',
-    parentOwner: 'Parent-owned brand account',
-    safety: 'No stranger comments without parent review.',
-    status: 'Not checked',
-    nextStep: 'Check primary and HQ handle variants.',
-  },
-  {
-    section: 'Secure First',
-    platform: 'Roblox group name',
-    priority: 'Secure Now',
-    suggestedHandle: 'Wild Weird World HQ',
-    why: 'Protects the game community name for future parent-managed use.',
-    parentOwner: 'Parent-managed group name',
-    safety: 'No open community features for kids yet.',
-    status: 'Not checked',
-    nextStep: 'Search group name availability and reserve safely.',
-  },
-  {
-    section: 'Secure First',
-    platform: 'Gmail / Google account',
-    priority: 'Secure Now',
-    suggestedHandle: 'wildweirdworldhq',
-    why: 'Creates a parent-controlled recovery identity for brand accounts.',
-    parentOwner: 'Parent recovery email required',
-    safety: 'No child personal info in account details.',
-    status: 'Not checked',
-    nextStep: 'Reserve Google identity and store recovery details.',
-  },
-  {
-    section: 'Secure First',
-    platform: 'Domain names',
-    priority: 'Secured',
-    suggestedHandle: OFFICIAL_DOMAIN,
-    why: 'Keeps the brand name available for the future public website.',
-    parentOwner: 'Parent-owned domain account',
-    safety: 'Parent manages domain, DNS, and publishing.',
-    status: 'Secured',
-    nextStep: 'Record registrar, DNS, and renewal details in the parent password manager.',
-  },
-  {
-    section: 'Secure First',
-    platform: 'Pinterest',
-    priority: 'Secure Now',
-    suggestedHandle: '@WildWeirdWorldHQ',
-    why: 'Good for parent-approved mood boards, animal inspiration, and craft references.',
-    parentOwner: 'Parent-owned planning account',
-    safety: 'No child personal boards or private info.',
-    status: 'Not checked',
-    nextStep: 'Reserve handle and keep boards brand-only.',
-  },
-  {
-    section: 'Secure First',
-    platform: 'Etsy shop name placeholder',
-    priority: 'Secure Now',
-    suggestedHandle: 'WildWeirdWorldHQ',
-    why: 'Protects a practice shop name for future parent-run merch.',
-    parentOwner: 'Parent-owned only',
-    safety: 'No real sales from this app; parent handles any future shop.',
-    status: 'Not checked',
-    nextStep: 'Check name only; do not open sales from WWW-HQ.',
-  },
-  {
-    section: 'Secure First',
-    platform: 'Redbubble/print-on-demand placeholder',
-    priority: 'Secure Now',
-    suggestedHandle: 'WildWeirdWorldHQ',
-    why: 'Protects a parent-owned placeholder for future art experiments.',
-    parentOwner: 'Parent-owned only',
-    safety: 'No real selling or shipping from WWW-HQ.',
-    status: 'Not checked',
-    nextStep: 'Check handle and record availability.',
-  },
-  {
-    section: 'Future Options',
-    platform: 'Threads',
-    priority: 'Later',
-    suggestedHandle: '@WildWeirdWorldHQ',
-    why: 'May help with parent-written launch notes later.',
-    parentOwner: 'Parent-owned future account',
-    safety: 'No kid posting or direct messaging.',
-    status: 'Not checked',
-    nextStep: 'Revisit after primary handles are secured.',
-  },
-  {
-    section: 'Future Options',
-    platform: 'X',
-    priority: 'Later',
-    suggestedHandle: '@WildWeirdWorldHQ',
-    why: 'Useful only if a parent wants an official update channel.',
-    parentOwner: 'Parent-owned future account',
-    safety: 'Avoid public replies from strangers for now.',
-    status: 'Not checked',
-    nextStep: 'Reserve only after primary family-safe channels.',
-  },
-  {
-    section: 'Future Options',
-    platform: 'Facebook Page',
-    priority: 'Later',
-    suggestedHandle: 'Wild Weird World HQ',
-    why: 'Could become a parent-facing announcement page.',
-    parentOwner: 'Parent-owned page',
-    safety: 'No child personal details or open comments.',
-    status: 'Not checked',
-    nextStep: 'Consider only for parent audience.',
-  },
-  {
-    section: 'Future Options',
-    platform: 'Discord community placeholder',
-    priority: 'Later',
-    suggestedHandle: 'Wild Weird World HQ',
-    why: 'Possible future parent-run community, not a kid space yet.',
-    parentOwner: 'Parent-run only',
-    safety: 'Not for kids yet; no open DMs.',
-    status: 'Not checked',
-    nextStep: 'Do not launch community until parent moderation plan exists.',
-  },
-  {
-    section: 'Future Options',
-    platform: 'Twitch',
-    priority: 'Later',
-    suggestedHandle: '@WildWeirdWorldHQ',
-    why: 'Future-only option for parent-approved demos.',
-    parentOwner: 'Parent-owned future account',
-    safety: 'No live streaming without parent plan.',
-    status: 'Not checked',
-    nextStep: 'Skip until games are ready.',
-  },
-  {
-    section: 'Avoid For Now',
-    platform: 'Snapchat',
-    priority: 'Avoid for Now',
-    suggestedHandle: '@WildWeirdWorldHQ',
-    why: 'Not needed for safe founder practice.',
-    parentOwner: 'Do not create for now',
-    safety: 'Avoid kid-facing messaging features.',
-    status: 'Not checked',
-    nextStep: 'Leave off the launch checklist.',
-  },
-  {
-    section: 'Avoid For Now',
-    platform: 'Reddit',
-    priority: 'Avoid for Now',
-    suggestedHandle: 'WildWeirdWorldHQ',
-    why: 'Open public discussion is not needed before launch.',
-    parentOwner: 'Do not create for now',
-    safety: 'Avoid stranger comments and public debate spaces.',
-    status: 'Not checked',
-    nextStep: 'Revisit only with a parent moderation plan.',
-  },
-]
-
-const namingRules = [
-  'Keep names short',
-  'Avoid using child’s real name',
-  'Avoid birth year, school, city, or private info',
-  'Use brand handles, not personal handles',
-  'Keep one master spreadsheet or parent password manager',
-  'Parent owns all accounts',
-  'Use recovery email controlled by parent',
-]
-
-const parentSafetyChecklist = [
-  'Parent owns account',
-  'Two-factor authentication enabled',
-  'No public DMs',
-  'Comments off or parent-reviewed',
-  'No location sharing',
-  'No face/voice posting unless parent approves',
-  'No real sales without parent handling',
-  'No school name or personal details',
-  'Keep practice/friend-feedback language',
-]
-
-const bestNextActions = [
-  'Check @WildWeirdWorldHQ',
-  'Reserve Gmail/Google identity',
-  'Secure Roblox group name',
 ]
 
 const planSections = [
@@ -1036,9 +798,6 @@ function Navigation() {
       <a className={isRoute('/ontology') ? 'active' : undefined} href="/ontology">
         Ontology
       </a>
-      <a className={isRoute('/handles') ? 'active' : undefined} href="/handles">
-        Handles
-      </a>
       <a className={isRoute('/plans') ? 'active' : undefined} href="/plans">
         Plans
       </a>
@@ -1129,16 +888,6 @@ function RouteSeo({ title, description, path = currentRoute(), type = 'website',
     })
     ensureTag('meta[property="og:type"]', 'meta', { property: 'og:type', content: type })
     ensureTag('meta[property="og:url"]', 'meta', { property: 'og:url', content: canonicalUrl })
-    ensureTag('meta[name="twitter:card"]', 'meta', {
-      name: 'twitter:card',
-      content: 'summary_large_image',
-    })
-    ensureTag('meta[name="twitter:title"]', 'meta', { name: 'twitter:title', content: title })
-    ensureTag('meta[name="twitter:description"]', 'meta', {
-      name: 'twitter:description',
-      content: description,
-    })
-
     if (schema) {
       let jsonTag = document.head.querySelector('script[data-route-schema="true"]')
       if (!jsonTag) {
@@ -1167,7 +916,6 @@ function Dashboard() {
           </p>
           <div className="hero-actions">
             <a href="/ontology">Open Ontology</a>
-            <a href="/handles">Secure creator handles</a>
             <a href="/plans">Open plans & mockups</a>
             <a href="/moss-hollow-studios">Enter Moss Hollow</a>
             <a href="/stories/hollow-coast">Explore Hollow Coast</a>
@@ -1523,166 +1271,6 @@ function OntologyPage() {
           <p className="eyebrow">Creative update path</p>
           <h2 id="ontology-flow">From Idea → Game → Content → Merch → Feedback → Next Update</h2>
           <FlowMap />
-        </section>
-      </main>
-    </Shell>
-  )
-}
-
-function PlatformCard({ platform }) {
-  return (
-    <article className="platform-card">
-      <div className="platform-card-top">
-        <div>
-          <p className="eyebrow">{platform.platform}</p>
-          <h3>{platform.suggestedHandle}</h3>
-        </div>
-        <span className={`priority-chip ${platform.priority.toLowerCase().replaceAll(' ', '-')}`}>
-          {platform.priority}
-        </span>
-      </div>
-      <dl className="platform-details">
-        <div>
-          <dt>Why it matters</dt>
-          <dd>{platform.why}</dd>
-        </div>
-        <div>
-          <dt>Parent owner status</dt>
-          <dd>{platform.parentOwner}</dd>
-        </div>
-        <div>
-          <dt>Safety note</dt>
-          <dd>{platform.safety}</dd>
-        </div>
-        <div>
-          <dt>Reservation status</dt>
-          <dd>{platform.status}</dd>
-        </div>
-        <div>
-          <dt>Next step</dt>
-          <dd>{platform.nextStep}</dd>
-        </div>
-      </dl>
-    </article>
-  )
-}
-
-function HandleSection({ title }) {
-  const cards = platformCards.filter((platform) => platform.section === title)
-
-  return (
-    <section className="handle-section" aria-labelledby={`${title.replaceAll(' ', '-').toLowerCase()}-title`}>
-      <div className="section-heading">
-        <p className="eyebrow">handle plan</p>
-        <h2 id={`${title.replaceAll(' ', '-').toLowerCase()}-title`}>{title}</h2>
-      </div>
-      <div className="platform-grid">
-        {cards.map((platform) => (
-          <PlatformCard platform={platform} key={`${platform.section}-${platform.platform}`} />
-        ))}
-      </div>
-    </section>
-  )
-}
-
-function HandleSecurityScore() {
-  const completed = parentSafetyChecklist.filter((_, index) => index < 3).length
-  const score = Math.round((completed / parentSafetyChecklist.length) * 100)
-
-  return (
-    <section className="score-panel" aria-labelledby="handle-score-title">
-      <div>
-        <p className="eyebrow">parent control tracker</p>
-        <h2 id="handle-score-title">Handle Security Score</h2>
-        <p>
-          Static planning score based on {completed} of {parentSafetyChecklist.length} safety
-          habits marked as ready.
-        </p>
-      </div>
-      <div className="score-meter" style={{ '--score': `${score}%` }}>
-        <strong>{score}%</strong>
-        <span>planning ready</span>
-      </div>
-    </section>
-  )
-}
-
-function HandlesPage() {
-  return (
-    <Shell>
-      <main>
-        <section className="handles-hero">
-          <p className="eyebrow">Handles</p>
-          <h1>Social Handle Tracker</h1>
-          <p className="lede">
-            “Parent-approved places to reserve the Wild Weird World name before launch.”
-          </p>
-          <div className="hero-actions">
-            <a href={OFFICIAL_URL}>Official domain: {OFFICIAL_DOMAIN}</a>
-          </div>
-        </section>
-
-        <section className="handle-patterns" aria-labelledby="handle-patterns-title">
-          <div className="section-heading">
-            <p className="eyebrow">recommended patterns</p>
-            <h2 id="handle-patterns-title">Brand handles to check first</h2>
-            <p className="section-note">Reserve brand/game handles, not personal child handles.</p>
-          </div>
-          <div className="handle-groups">
-            <div>
-              <h3>Primary</h3>
-              <div className="chips handle-chips">
-                {primaryHandlePatterns.map((handle) => (
-                  <span key={handle}>{handle}</span>
-                ))}
-              </div>
-            </div>
-            <div>
-              <h3>Game handle ideas</h3>
-              <div className="chips handle-chips">
-                {restoredHandlePatterns.map((handle) => (
-                  <span key={handle}>{handle}</span>
-                ))}
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <HandleSecurityScore />
-
-        <section className="next-actions" aria-labelledby="next-actions-title">
-          <p className="eyebrow">Best next 3 actions</p>
-          <h2 id="next-actions-title">Do these before any launch planning.</h2>
-          <ol>
-            {bestNextActions.map((action) => (
-              <li key={action}>{action}</li>
-            ))}
-          </ol>
-        </section>
-
-        <HandleSection title="Secure First" />
-        <HandleSection title="Future Options" />
-        <HandleSection title="Avoid For Now" />
-
-        <section className="rule-grid" aria-label="Naming rules and parent safety checklist">
-          <article className="rules-card">
-            <p className="eyebrow">Naming Rules</p>
-            <h2>Naming Rules</h2>
-            <ul>
-              {namingRules.map((rule) => (
-                <li key={rule}>{rule}</li>
-              ))}
-            </ul>
-          </article>
-          <article className="rules-card">
-            <p className="eyebrow">Parent Safety Checklist</p>
-            <h2>Parent Safety Checklist</h2>
-            <ul>
-              {parentSafetyChecklist.map((item) => (
-                <li key={item}>{item}</li>
-              ))}
-            </ul>
-          </article>
         </section>
       </main>
     </Shell>
@@ -2077,16 +1665,16 @@ function StoryThreadGraph() {
   return (
     <section className="story-section" aria-labelledby="thread-graph-title">
       <div className="section-heading">
-        <p className="eyebrow">Intertwining story threads</p>
+        <p className="eyebrow">Intertwining story lines</p>
         <h2 id="thread-graph-title">Every mystery tugs on another string.</h2>
       </div>
       <div className="thread-graph">
-        {hollowCoastStoryThreads.map((thread, index) => (
-          <article className={`thread-card thread-card-${index + 1}`} key={thread.title}>
-            <h3>{thread.title}</h3>
-            <p>{thread.summary}</p>
+        {hollowCoastStoryLines.map((storyLine, index) => (
+          <article className={`thread-card thread-card-${index + 1}`} key={storyLine.title}>
+            <h3>{storyLine.title}</h3>
+            <p>{storyLine.summary}</p>
             <div className="chips">
-              {thread.beats.map((beat) => (
+              {storyLine.beats.map((beat) => (
                 <span key={beat}>{beat}</span>
               ))}
             </div>
@@ -3359,8 +2947,8 @@ function EntitiesMasterPage() {
         description={description}
         path="/entities"
         schema={{
-          '@context': 'https://schema.org',
-          '@type': 'CollectionPage',
+          [schemaKey('context')]: 'https://schema.org',
+          [schemaKey('type')]: 'CollectionPage',
           name: 'Wild Weird World Entity Encyclopedia',
           url: `${OFFICIAL_URL}/entities`,
         }}
@@ -3422,8 +3010,8 @@ function EntityDetailPage({ entity }) {
         description={description}
         path={`/entity/${entity.slug}`}
         schema={{
-          '@context': 'https://schema.org',
-          '@type': entitySchemaType(entity),
+          [schemaKey('context')]: 'https://schema.org',
+          [schemaKey('type')]: entitySchemaType(entity),
           name: entity.name,
           description: entity.description,
           url: `${OFFICIAL_URL}/entity/${entity.slug}`,
@@ -3497,8 +3085,8 @@ function GamesIndexPage() {
         description={description}
         path="/games"
         schema={{
-          '@context': 'https://schema.org',
-          '@type': 'CollectionPage',
+          [schemaKey('context')]: 'https://schema.org',
+          [schemaKey('type')]: 'CollectionPage',
           name: 'Wild Weird World Games',
           url: `${OFFICIAL_URL}/games`,
         }}
@@ -3565,8 +3153,8 @@ function CharactersPage() {
         description={description}
         path="/characters"
         schema={{
-          '@context': 'https://schema.org',
-          '@type': 'CollectionPage',
+          [schemaKey('context')]: 'https://schema.org',
+          [schemaKey('type')]: 'CollectionPage',
           name: 'Game Character Encyclopedia',
           url: `${OFFICIAL_URL}/characters`,
         }}
@@ -3631,8 +3219,8 @@ function WorldsPage() {
         description={description}
         path="/worlds"
         schema={{
-          '@context': 'https://schema.org',
-          '@type': 'CollectionPage',
+          [schemaKey('context')]: 'https://schema.org',
+          [schemaKey('type')]: 'CollectionPage',
           name: 'Game Worlds Encyclopedia',
           url: `${OFFICIAL_URL}/worlds`,
         }}
@@ -3701,8 +3289,8 @@ function FounderPage() {
         description={description}
         path="/founder"
         schema={{
-          '@context': 'https://schema.org',
-          '@type': 'AboutPage',
+          [schemaKey('context')]: 'https://schema.org',
+          [schemaKey('type')]: 'AboutPage',
           name: 'Wild Weird World Founder Story',
           url: `${OFFICIAL_URL}/founder`,
         }}
@@ -3735,8 +3323,8 @@ function BlogIndexPage() {
         description={description}
         path="/blog"
         schema={{
-          '@context': 'https://schema.org',
-          '@type': 'Blog',
+          [schemaKey('context')]: 'https://schema.org',
+          [schemaKey('type')]: 'Blog',
           name: 'Wild Weird World Game Design Blog',
           url: `${OFFICIAL_URL}/blog`,
         }}
@@ -3776,8 +3364,8 @@ function BlogArticlePage({ article }) {
         path={article.path}
         type="article"
         schema={{
-          '@context': 'https://schema.org',
-          '@type': 'Article',
+          [schemaKey('context')]: 'https://schema.org',
+          [schemaKey('type')]: 'Article',
           headline: article.title,
           description: article.description,
           url: `${OFFICIAL_URL}${article.path}`,
@@ -3813,8 +3401,8 @@ function GameDevForKidsPage() {
         description={description}
         path="/game-dev-for-kids"
         schema={{
-          '@context': 'https://schema.org',
-          '@type': 'Guide',
+          [schemaKey('context')]: 'https://schema.org',
+          [schemaKey('type')]: 'Guide',
           name: 'Game Development for Kids',
           url: `${OFFICIAL_URL}/game-dev-for-kids`,
         }}
@@ -3852,8 +3440,8 @@ function HowWeBuildGamesPage() {
         description={description}
         path="/how-we-build-games"
         schema={{
-          '@context': 'https://schema.org',
-          '@type': 'HowTo',
+          [schemaKey('context')]: 'https://schema.org',
+          [schemaKey('type')]: 'HowTo',
           name: 'How We Build Games',
           url: `${OFFICIAL_URL}/how-we-build-games`,
         }}
@@ -3926,8 +3514,8 @@ function SeoGameLandingPage({ game }) {
         description={game.meta}
         path={currentRoute()}
         schema={{
-          '@context': 'https://schema.org',
-          '@type': 'VideoGame',
+          [schemaKey('context')]: 'https://schema.org',
+          [schemaKey('type')]: 'VideoGame',
           name: game.title,
           description: game.meta,
           url: `${OFFICIAL_URL}${currentRoute()}`,
@@ -4061,8 +3649,6 @@ function App() {
         <ClobotLabPage version="next" />
       ) : isRoute('/ontology') ? (
         <OntologyPage />
-      ) : isRoute('/handles') ? (
-        <HandlesPage />
       ) : isRoute('/dub-dub-dub') ? (
         <DubDubDubPage />
       ) : isRoute('/moss-hollow-studios') ? (

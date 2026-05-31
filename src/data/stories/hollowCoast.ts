@@ -328,7 +328,7 @@ export const hollowCoastPortalNetwork = [
   ['Fairy Fort Hill', 'Blackwater Cove', 'friend-made map route'],
 ]
 
-export const hollowCoastStoryThreads = [
+export const hollowCoastStoryLines = [
   {
     title: 'Samantha/Jake Thread',
     summary: 'Two friends learn that courage works best when clues and jokes travel together.',
@@ -455,7 +455,7 @@ export const hollowCoastMerchConcepts = [
 ]
 
 export const hollowCoastSocialIdeas = [
-  ['TikTok/reel hooks', 'Short parent-reviewed lore reveals, map flips, creature cards, and safe polls.'],
+  ['Short video hooks', 'Short parent-reviewed lore reveals, map flips, creature cards, and safe polls.'],
   ['Collectible lore drops', 'Weekly creature clue with no personal data and no stranger DMs.'],
   ['Friend art prompts', 'Draw a portal shell, design a lantern, or name a gentle reef creature.'],
   ['Update logs', 'Show new cards, maps, and story boards as creative practice.'],

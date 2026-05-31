@@ -69,7 +69,7 @@ const worldConfigs = [
       ],
       Location: [
         ['Main Cafe', 'The central counter room where orders, friendships, and daily quests begin.'],
-        ['The Silk Balcony', 'An upstairs seating nook with soft threads, tiny plants, and quiet views.'],
+        ['The Silk Balcony', 'An upstairs seating nook with soft silk lines, tiny plants, and quiet views.'],
         ['Moonlight Patio', 'An outdoor evening stage for music, tea, and firefly visitors.'],
         ['The Roasting Room', 'A warm back room where beans, cocoa, and magical aromas are prepared.'],
         ['Cobweb Library', 'A shelf-lined reading room where recipes and customer stories are archived.'],

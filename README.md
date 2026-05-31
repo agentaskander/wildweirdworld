@@ -8,7 +8,6 @@ Kid-safe founder command center for building games, weird animal worlds, creativ
 ## Key Routes
 
 - Dashboard: `http://127.0.0.1:3195/`
-- Handles tracker: `http://127.0.0.1:3195/handles`
 - Public-safe ontology: `http://127.0.0.1:3195/ontology`
 - Plans and mockups: `http://127.0.0.1:3195/plans`
 
