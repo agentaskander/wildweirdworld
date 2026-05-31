@@ -1,5 +1,57 @@
 import { useEffect } from 'react'
 import './App.css'
+import {
+  hollowCoastBooks,
+  hollowCoastCharacters,
+  hollowCoastCreatures,
+  hollowCoastLocations,
+  hollowCoastMerchConcepts,
+  hollowCoastOverview,
+  hollowCoastPortalNetwork,
+  hollowCoastRealms,
+  hollowCoastRobloxHooks,
+  hollowCoastSocialIdeas,
+  hollowCoastStoryThreads,
+} from './data/stories/hollowCoast'
+import {
+  queenJellyCharacters,
+  queenJellyGames,
+  queenJellyLore,
+  queenJellyRegions,
+  queenJellyTypes,
+  queenJellyUniverse,
+} from './data/queenJelly'
+import {
+  clobotArchetypes,
+  clobotCommunitySystem,
+  clobotCreatorArchetypes,
+  clobotCreatorFeatures,
+  clobotDefinitions,
+  clobotEducationAngles,
+  clobotExpressionVariants,
+  clobotFaceGameplayHooks,
+  clobotGame,
+  clobotGameplayLoop,
+  clobotIdentityKits,
+  clobotItems,
+  clobotLab,
+  clobotLabUiIdeas,
+  clobotMarketingKit,
+  clobotMechanics,
+  clobotRealms,
+  clobotRoadmap,
+  clobotSocialCreator,
+} from './data/clobotGame'
+import {
+  blogArticles,
+  founderSections,
+  gameDevForKidsSections,
+  processSteps,
+  seoCharacters,
+  seoCoreLinks,
+  seoGames,
+  seoWorlds,
+} from './data/seoExpansion'
 
 const PORT = 3195
 const OFFICIAL_DOMAIN = 'wildweirdworld.com'
@@ -159,6 +211,34 @@ const dashboardCards = [
     emoji: '🌿',
     text: 'Step into the cozy weird studio for frogs, lanterns, friendship, and game universes.',
     href: '/moss-hollow-studios',
+  },
+  {
+    title: 'Hollow Coast Chronicles',
+    eyebrow: 'Story archive',
+    emoji: '🌊',
+    text: 'Explore a foggy coast of portals, lighthouse secrets, reef civilizations, and friendship mysteries.',
+    href: '/stories/hollow-coast',
+  },
+  {
+    title: 'Queen Jelly',
+    eyebrow: 'Nectar Realm',
+    emoji: '🍯',
+    text: 'Enter a magical pollinator realm of jelly keepers, moon blooms, cozy ecology, and Roblox-ready quests.',
+    href: '/queen-jelly',
+  },
+  {
+    title: 'Clobot Game',
+    eyebrow: 'Roblox-native concept',
+    emoji: '🤖',
+    text: 'Build strange little helper bots for signal worlds, modular creativity, and cozy sci-fi exploration.',
+    href: '/clobot-game',
+  },
+  {
+    title: 'Clobot Face Lab',
+    eyebrow: 'Optional experiment',
+    emoji: '◔',
+    text: 'Design expressive lowercase-c bot faces, emotion variants, stickers, gadgets, and playful identities.',
+    href: '/clobot-lab-next',
   },
   {
     title: 'Creator Empire',
@@ -872,6 +952,31 @@ function Navigation() {
       >
         Moss Hollow
       </a>
+      <a className={currentRoute().startsWith('/stories') ? 'active' : undefined} href="/stories">
+        Stories
+      </a>
+      <a
+        className={currentRoute().startsWith('/queen-jelly') ? 'active' : undefined}
+        href="/queen-jelly"
+      >
+        Queen Jelly
+      </a>
+      <a className={isRoute('/clobot-game') ? 'active' : undefined} href="/clobot-game">
+        Clobot
+      </a>
+      <a
+        className={
+          isRoute('/clobot-lab-classic') ||
+          isRoute('/clobot-lab-next') ||
+          isRoute('/experiments/clobot-creator') ||
+          isRoute('/clobot-lab')
+            ? 'active'
+            : undefined
+        }
+        href="/clobot-lab-next"
+      >
+        Face Lab
+      </a>
       <a className={isRoute('/ontology') ? 'active' : undefined} href="/ontology">
         Ontology
       </a>
@@ -883,6 +988,21 @@ function Navigation() {
       </a>
       <a className={isRoute('/creator-empire') ? 'active' : undefined} href="/creator-empire">
         Creator Empire
+      </a>
+      <a className={isRoute('/games') ? 'active' : undefined} href="/games">
+        Games
+      </a>
+      <a className={isRoute('/characters') ? 'active' : undefined} href="/characters">
+        Characters
+      </a>
+      <a className={isRoute('/worlds') ? 'active' : undefined} href="/worlds">
+        Worlds
+      </a>
+      <a className={isRoute('/founder') ? 'active' : undefined} href="/founder">
+        Founder
+      </a>
+      <a className={currentRoute().startsWith('/blog') ? 'active' : undefined} href="/blog">
+        Blog
       </a>
     </nav>
   )
@@ -925,6 +1045,53 @@ function Seo({ title, description }) {
   return null
 }
 
+function RouteSeo({ title, description, path = currentRoute(), type = 'website', schema }) {
+  useEffect(() => {
+    document.title = title
+    const canonicalUrl = `${OFFICIAL_URL}${path}`
+    const ensureTag = (selector, createTag, attributes) => {
+      let tag = document.head.querySelector(selector)
+      if (!tag) {
+        tag = document.createElement(createTag)
+        document.head.appendChild(tag)
+      }
+      Object.entries(attributes).forEach(([key, value]) => tag.setAttribute(key, value))
+    }
+
+    ensureTag('meta[name="description"]', 'meta', { name: 'description', content: description })
+    ensureTag('link[rel="canonical"]', 'link', { rel: 'canonical', href: canonicalUrl })
+    ensureTag('meta[property="og:title"]', 'meta', { property: 'og:title', content: title })
+    ensureTag('meta[property="og:description"]', 'meta', {
+      property: 'og:description',
+      content: description,
+    })
+    ensureTag('meta[property="og:type"]', 'meta', { property: 'og:type', content: type })
+    ensureTag('meta[property="og:url"]', 'meta', { property: 'og:url', content: canonicalUrl })
+    ensureTag('meta[name="twitter:card"]', 'meta', {
+      name: 'twitter:card',
+      content: 'summary_large_image',
+    })
+    ensureTag('meta[name="twitter:title"]', 'meta', { name: 'twitter:title', content: title })
+    ensureTag('meta[name="twitter:description"]', 'meta', {
+      name: 'twitter:description',
+      content: description,
+    })
+
+    if (schema) {
+      let jsonTag = document.head.querySelector('script[data-route-schema="true"]')
+      if (!jsonTag) {
+        jsonTag = document.createElement('script')
+        jsonTag.type = 'application/ld+json'
+        jsonTag.setAttribute('data-route-schema', 'true')
+        document.head.appendChild(jsonTag)
+      }
+      jsonTag.textContent = JSON.stringify(schema)
+    }
+  }, [description, path, schema, title, type])
+
+  return null
+}
+
 function Dashboard() {
   return (
     <Shell>
@@ -941,6 +1108,10 @@ function Dashboard() {
             <a href="/handles">Secure creator handles</a>
             <a href="/plans">Open plans & mockups</a>
             <a href="/moss-hollow-studios">Enter Moss Hollow</a>
+            <a href="/stories/hollow-coast">Explore Hollow Coast</a>
+            <a href="/queen-jelly">Visit Queen Jelly</a>
+            <a href="/clobot-game">Open Clobot Game</a>
+            <a href="/clobot-lab-next">Open Face Lab</a>
             <a href={OFFICIAL_URL}>Official domain</a>
             <span>Local port {PORT}</span>
           </div>
@@ -1714,6 +1885,1785 @@ function CreatorEmpirePage() {
   )
 }
 
+const storyRoutes = [
+  ['Archive', '/stories'],
+  ['Overview', '/stories/hollow-coast'],
+  ['Characters', '/stories/hollow-coast/characters'],
+  ['Locations', '/stories/hollow-coast/locations'],
+  ['Books', '/stories/hollow-coast/books'],
+  ['Creatures', '/stories/hollow-coast/creatures'],
+  ['Realms', '/stories/hollow-coast/realms'],
+  ['Portal Network', '/stories/hollow-coast/portal-network'],
+  ['Merch Lab', '/stories/hollow-coast/merch-lab'],
+  ['Social Kit', '/stories/hollow-coast/social-media-kit'],
+]
+
+function StoryNav() {
+  return (
+    <nav className="story-nav" aria-label="Hollow Coast story navigation">
+      {storyRoutes.map(([label, href]) => (
+        <a className={isRoute(href) ? 'active' : undefined} href={href} key={href}>
+          {label}
+        </a>
+      ))}
+    </nav>
+  )
+}
+
+function HollowCoastHero({ eyebrow = 'Moss Hollow Studios', title = hollowCoastOverview.title }) {
+  return (
+    <section className="hollow-hero">
+      <div>
+        <p className="eyebrow">{eyebrow}</p>
+        <h1>{title}</h1>
+        <p className="lede">{hollowCoastOverview.subtitle}</p>
+        <div className="hero-actions">
+          <a href="/stories/hollow-coast/characters">Open character cards</a>
+          <a href="/stories/hollow-coast/books">Explore books</a>
+          <a href="/stories/hollow-coast/portal-network">Map portals</a>
+        </div>
+      </div>
+      <div className="coast-map-card" aria-label="Glowing Hollow Coast map">
+        <span className="map-mist mist-one"></span>
+        <span className="map-mist mist-two"></span>
+        {['Cove', 'Caverns', 'Reef', 'Lighthouse', 'Arches'].map((node, index) => (
+          <span className={`portal-dot portal-dot-${index + 1}`} key={node}>
+            {node}
+          </span>
+        ))}
+        <strong>Fog Map 01</strong>
+      </div>
+    </section>
+  )
+}
+
+function StoryHubPage() {
+  return (
+    <Shell>
+      <main className="stories-page">
+        <section className="stories-hub-hero">
+          <p className="eyebrow">Moss Hollow Studios</p>
+          <h1>Story Worlds Archive</h1>
+          <p className="lede">
+            A public-safe library for cozy mysteries, creature cards, franchise maps, game hooks,
+            and kid-friendly creator planning.
+          </p>
+          <div className="hero-actions">
+            <a href="/stories/hollow-coast">Explore the Coast</a>
+            <a href="/moss-hollow-studios">Moss Hollow Studios</a>
+          </div>
+        </section>
+        <StoryNav />
+        <section className="story-franchise-grid" aria-label="Story franchise cards">
+          <article className="journal-card feature-franchise-card">
+            <p className="eyebrow">Flagship story bible</p>
+            <h2>Hollow Coast Chronicles</h2>
+            <p>
+              Foggy coves, portal tides, lighthouse clues, underwater archives, and friendship-first
+              mystery adventures built for stories, Roblox worlds, cards, and safe content ideas.
+            </p>
+            <a className="card-link" href="/stories/hollow-coast">
+              Explore the Coast
+            </a>
+          </article>
+          <article className="journal-card">
+            <p className="eyebrow">Studio section</p>
+            <h2>🌿 Moss Hollow Studios</h2>
+            <p>
+              Weird cozy design principles, safe weirdness, animal-first storytelling, friendship
+              gameplay, and handmade world-building energy.
+            </p>
+            <a className="card-link" href="/moss-hollow-studios">
+              Enter Studio
+            </a>
+          </article>
+        </section>
+      </main>
+    </Shell>
+  )
+}
+
+function StudioFranchiseSection() {
+  return (
+    <section className="studio-franchise-section">
+      <div>
+        <p className="eyebrow">Expandable studio section</p>
+        <h2>🌿 Moss Hollow Studios builds safe weirdness.</h2>
+      </div>
+      <div className="journal-grid">
+        {[
+          ['Emotional identity', 'Cozy mystery, brave friendships, and strange places that still feel safe.'],
+          ['Animal-first storytelling', 'Creatures are helpers, clue keepers, guides, and collectible friends.'],
+          ['Creativity over competition', 'The best reward is a better story, a kinder choice, or a new map page.'],
+          ['Franchise-ready worlds', 'Each story can become books, cards, Roblox locations, safe videos, and merch concepts.'],
+        ].map(([title, text]) => (
+          <article className="journal-card" key={title}>
+            <h3>{title}</h3>
+            <p>{text}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+  )
+}
+
+function StoryThreadGraph() {
+  return (
+    <section className="story-section" aria-labelledby="thread-graph-title">
+      <div className="section-heading">
+        <p className="eyebrow">Intertwining story threads</p>
+        <h2 id="thread-graph-title">Every mystery tugs on another string.</h2>
+      </div>
+      <div className="thread-graph">
+        {hollowCoastStoryThreads.map((thread, index) => (
+          <article className={`thread-card thread-card-${index + 1}`} key={thread.title}>
+            <h3>{thread.title}</h3>
+            <p>{thread.summary}</p>
+            <div className="chips">
+              {thread.beats.map((beat) => (
+                <span key={beat}>{beat}</span>
+              ))}
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+  )
+}
+
+function HollowCoastPage() {
+  return (
+    <Shell>
+      <main className="stories-page hollow-page">
+        <HollowCoastHero />
+        <StoryNav />
+        <StudioFranchiseSection />
+
+        <section className="story-section" aria-labelledby="coast-quick-title">
+          <div className="section-heading">
+            <p className="eyebrow">Explorer journal</p>
+            <h2 id="coast-quick-title">Start with the living map.</h2>
+          </div>
+          <div className="journal-grid">
+            {hollowCoastOverview.designWords.map((word) => (
+              <article className="journal-card sticker-card" key={word}>
+                <span>✦</span>
+                <h3>{word}</h3>
+                <p>Design cue for pages, maps, lore cards, collectibles, and safe story posts.</p>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <StoryThreadGraph />
+
+        <section className="story-section" aria-labelledby="route-overview-title">
+          <div className="section-heading">
+            <p className="eyebrow">Archive rooms</p>
+            <h2 id="route-overview-title">Choose a Hollow Coast shelf.</h2>
+          </div>
+          <div className="story-route-grid">
+            {storyRoutes.slice(2).map(([label, href]) => (
+              <a className="route-tile" href={href} key={href}>
+                <strong>{label}</strong>
+                <span>Open archive</span>
+              </a>
+            ))}
+          </div>
+        </section>
+      </main>
+    </Shell>
+  )
+}
+
+function CharacterLoreCard({ character }) {
+  return (
+    <article className="lore-card character-lore-card">
+      <span className="dub-icon" aria-hidden="true">
+        {character.icon}
+      </span>
+      <p className="eyebrow">{character.role}</p>
+      <h2>{character.name}</h2>
+      <p>{character.bio}</p>
+      <div className="chips">
+        {character.personality.map((trait) => (
+          <span key={trait}>{trait}</span>
+        ))}
+      </div>
+      {[
+        ['Relationships', character.relationships],
+        ['Secrets', character.secrets],
+        ['Arc progression', character.arcProgression],
+        ['Associated locations', character.associatedLocations],
+        ['Associated creatures', character.associatedCreatures],
+        ['Future story hooks', character.futureStoryHooks],
+        ['Merch concepts', character.merchConcepts],
+        ['Roblox role ideas', character.robloxRoleIdeas],
+      ].map(([label, items]) => (
+        <details key={label}>
+          <summary>{label}</summary>
+          <ul>
+            {items.map((item) => (
+              <li key={item}>{item}</li>
+            ))}
+          </ul>
+        </details>
+      ))}
+    </article>
+  )
+}
+
+function HollowCoastCharactersPage() {
+  return (
+    <Shell>
+      <main className="stories-page">
+        <HollowCoastHero eyebrow="Character archive" title="Hollow Coast Characters" />
+        <StoryNav />
+        <section className="story-section">
+          <div className="character-lore-grid">
+            {hollowCoastCharacters.map((character) => (
+              <CharacterLoreCard character={character} key={character.name} />
+            ))}
+          </div>
+        </section>
+      </main>
+    </Shell>
+  )
+}
+
+function LocationLoreCard({ location }) {
+  return (
+    <article className="lore-card location-lore-card">
+      <span className="dub-icon" aria-hidden="true">
+        {location.icon}
+      </span>
+      <p className="eyebrow">{location.mood}</p>
+      <h2>{location.name}</h2>
+      <strong>{location.visualCard}</strong>
+      <p>{location.lore}</p>
+      {[
+        ['Story connections', location.storyConnections],
+        ['Creature presence', location.creaturePresence],
+        ['Future chapter hooks', location.futureChapterHooks],
+      ].map(([label, items]) => (
+        <details key={label} open={label === 'Story connections'}>
+          <summary>{label}</summary>
+          <ul>
+            {items.map((item) => (
+              <li key={item}>{item}</li>
+            ))}
+          </ul>
+        </details>
+      ))}
+    </article>
+  )
+}
+
+function HollowCoastLocationsPage() {
+  return (
+    <Shell>
+      <main className="stories-page">
+        <HollowCoastHero eyebrow="Location system" title="Hollow Coast Locations" />
+        <StoryNav />
+        <section className="story-section">
+          <div className="location-lore-grid">
+            {hollowCoastLocations.map((location) => (
+              <LocationLoreCard location={location} key={location.name} />
+            ))}
+          </div>
+        </section>
+      </main>
+    </Shell>
+  )
+}
+
+function BookExplorerCard({ book }) {
+  return (
+    <article className="book-explorer-card">
+      <p className="eyebrow">{book.series}</p>
+      <h2>{book.title}</h2>
+      <p>{book.premise}</p>
+      <div className="chapter-stack">
+        {book.chapters.map((chapter, index) => (
+          <details className="chapter-card" key={chapter.title} open={index === 0}>
+            <summary>
+              <span>Chapter {index + 1}</span>
+              <strong>{chapter.title}</strong>
+            </summary>
+            <div className="chapter-grid">
+              {[
+                ['Themes', chapter.themes],
+                ['Story points', chapter.storyPoints],
+                ['Character intersections', chapter.characterIntersections],
+                ['Future foreshadowing', chapter.futureForeshadowing],
+                ['Merch tie-ins', chapter.merchTieIns],
+                ['Roblox tie-ins', chapter.robloxTieIns],
+                ['Social content hooks', chapter.socialContentHooks],
+              ].map(([label, items]) => (
+                <div key={label}>
+                  <strong>{label}</strong>
+                  <ul>
+                    {items.map((item) => (
+                      <li key={item}>{item}</li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+          </details>
+        ))}
+      </div>
+    </article>
+  )
+}
+
+function HollowCoastBooksPage() {
+  return (
+    <Shell>
+      <main className="stories-page">
+        <HollowCoastHero eyebrow="Book + chapter explorer" title="Hollow Coast Books" />
+        <StoryNav />
+        <section className="story-section">
+          <div className="book-stack">
+            {hollowCoastBooks.map((book) => (
+              <BookExplorerCard book={book} key={book.title} />
+            ))}
+          </div>
+        </section>
+      </main>
+    </Shell>
+  )
+}
+
+function SimpleArchivePage({ title, eyebrow, items, detailLabel = 'Archive note' }) {
+  return (
+    <Shell>
+      <main className="stories-page">
+        <HollowCoastHero eyebrow={eyebrow} title={title} />
+        <StoryNav />
+        <section className="story-section">
+          <div className="journal-grid">
+            {items.map(([name, text]) => (
+              <article className="journal-card collectible-card" key={name}>
+                <p className="eyebrow">{detailLabel}</p>
+                <h2>{name}</h2>
+                <p>{text}</p>
+              </article>
+            ))}
+          </div>
+        </section>
+      </main>
+    </Shell>
+  )
+}
+
+function HollowCoastPortalNetworkPage() {
+  return (
+    <Shell>
+      <main className="stories-page">
+        <HollowCoastHero eyebrow="Portal network" title="Hollow Coast Portal Network" />
+        <StoryNav />
+        <section className="story-section portal-network-section">
+          <div className="section-heading">
+            <p className="eyebrow">Lore graph map</p>
+            <h2>Routes connect only when the story needs them.</h2>
+          </div>
+          <div className="portal-network-map">
+            {hollowCoastPortalNetwork.map(([from, to, note], index) => (
+              <article className={`portal-route portal-route-${index + 1}`} key={`${from}-${to}`}>
+                <strong>{from}</strong>
+                <span>connects to</span>
+                <strong>{to}</strong>
+                <small>{note}</small>
+              </article>
+            ))}
+          </div>
+        </section>
+        <StoryThreadGraph />
+      </main>
+    </Shell>
+  )
+}
+
+function HollowCoastMerchLabPage() {
+  return (
+    <Shell>
+      <main className="stories-page">
+        <HollowCoastHero eyebrow="Practice merch lab" title="Hollow Coast Merch Lab" />
+        <StoryNav />
+        <section className="story-section merch-lab-section">
+          <div className="section-heading">
+            <p className="eyebrow">Parent-safe concepts</p>
+            <h2>Ideas only, no real sales inside the app.</h2>
+          </div>
+          <div className="journal-grid">
+            {hollowCoastMerchConcepts.map(([name, text]) => (
+              <article className="journal-card merch-card" key={name}>
+                <h2>{name}</h2>
+                <p>{text}</p>
+                <div className="chips">
+                  <span>Parent review</span>
+                  <span>Practice concept</span>
+                  <span>No checkout</span>
+                </div>
+              </article>
+            ))}
+          </div>
+        </section>
+      </main>
+    </Shell>
+  )
+}
+
+function HollowCoastSocialMediaKitPage() {
+  return (
+    <Shell>
+      <main className="stories-page">
+        <HollowCoastHero eyebrow="Social media kit" title="Hollow Coast Social Media Kit" />
+        <StoryNav />
+        <section className="story-section social-kit-section">
+          <div className="section-heading">
+            <p className="eyebrow">Creativity + friendship</p>
+            <h2>Safe content prompts for parent-reviewed storytelling.</h2>
+          </div>
+          <div className="journal-grid">
+            {hollowCoastSocialIdeas.map(([name, text]) => (
+              <article className="journal-card" key={name}>
+                <h2>{name}</h2>
+                <p>{text}</p>
+              </article>
+            ))}
+          </div>
+        </section>
+        <section className="story-section">
+          <div className="section-heading">
+            <p className="eyebrow">Roblox/world expansion hooks</p>
+            <h2>Game ideas that stay friendship-first.</h2>
+          </div>
+          <div className="journal-grid">
+            {hollowCoastRobloxHooks.map(([name, text]) => (
+              <article className="journal-card collectible-card" key={name}>
+                <h2>{name}</h2>
+                <p>{text}</p>
+              </article>
+            ))}
+          </div>
+        </section>
+      </main>
+    </Shell>
+  )
+}
+
+const queenJellyRoutes = [
+  ['Realm', '/queen-jelly'],
+  ['Characters', '/queen-jelly/characters'],
+  ['Regions', '/queen-jelly/regions'],
+  ['Lore', '/queen-jelly/lore'],
+  ['Jellies', '/queen-jelly/jellies'],
+  ['Games', '/queen-jelly/games'],
+]
+
+function QueenJellyNav() {
+  return (
+    <nav className="queen-nav" aria-label="Queen Jelly navigation">
+      {queenJellyRoutes.map(([label, href]) => (
+        <a className={isRoute(href) ? 'active' : undefined} href={href} key={href}>
+          {label}
+        </a>
+      ))}
+    </nav>
+  )
+}
+
+function QueenJellyHero({ eyebrow = 'Queen Jelly Bee', title = queenJellyUniverse.title }) {
+  return (
+    <section className="queen-hero">
+      <div className="queen-hero-copy">
+        <p className="eyebrow">{eyebrow}</p>
+        <h1>{title}</h1>
+        <p className="queen-subtitle">{queenJellyUniverse.realm}</p>
+        <p className="lede">{queenJellyUniverse.tagline}</p>
+        <div className="hero-actions">
+          <a href="/queen-jelly/characters">Meet the Keepers</a>
+          <a href="/queen-jelly/jellies">Collect Jellies</a>
+          <a href="/queen-jelly/games">Game Concepts</a>
+        </div>
+      </div>
+      <div className="nectar-orb" aria-label="Glowing Nectar Realm portal">
+        <span className="pollen pollen-one"></span>
+        <span className="pollen pollen-two"></span>
+        <span className="pollen pollen-three"></span>
+        <strong>Queen Jelly Bee</strong>
+      </div>
+    </section>
+  )
+}
+
+function QueenJellyLandingPage() {
+  return (
+    <Shell>
+      <main className="queen-page">
+        <QueenJellyHero />
+        <QueenJellyNav />
+
+        <section className="queen-section nectar-overview" aria-labelledby="nectar-title">
+          <div>
+            <p className="eyebrow">Nectar Realm overview</p>
+            <h2 id="nectar-title">A warm little world where nature hums back.</h2>
+          </div>
+          <p>
+            Queen Jelly is a magical ecology universe for flower paths, moon moth messages, mushroom
+            archives, swamp markets, floating apiaries, and gentle creature quests. It can grow into
+            QueenJelly.org storytelling, Wild Weird World crossovers, and Roblox experiences while
+            staying parent-safe and kid-friendly.
+          </p>
+        </section>
+
+        <section className="queen-section">
+          <div className="section-heading">
+            <p className="eyebrow">Universe pillars</p>
+            <h2>Cozy fantasy ecology without lectures.</h2>
+          </div>
+          <div className="queen-card-grid">
+            {queenJellyUniverse.pillars.map((pillar) => (
+              <article className="queen-card jelly-glow-card" key={pillar}>
+                <h3>{pillar}</h3>
+                <p>Built for soft wonder, stewardship, creature care, and expandable story play.</p>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section className="queen-section">
+          <div className="section-heading">
+            <p className="eyebrow">Featured characters</p>
+            <h2>Helpers, scouts, scholars, builders, and market troublemakers.</h2>
+          </div>
+          <div className="queen-card-grid">
+            {queenJellyCharacters.slice(0, 4).map((character) => (
+              <QueenCharacterCard character={character} key={character.name} compact />
+            ))}
+          </div>
+        </section>
+
+        <section className="queen-section">
+          <div className="section-heading">
+            <p className="eyebrow">Regions preview</p>
+            <h2>Map the gardens, forests, hollows, markets, and sky hives.</h2>
+          </div>
+          <div className="queen-map-grid">
+            {queenJellyRegions.map((region) => (
+              <a className="queen-region-tile" href="/queen-jelly/regions" key={region.name}>
+                <span>{region.icon}</span>
+                <strong>{region.name}</strong>
+              </a>
+            ))}
+          </div>
+        </section>
+
+        <section className="queen-section queen-split">
+          <article>
+            <p className="eyebrow">Lore preview</p>
+            <h2>Living Resonance, Jelly Keepers, and Static Fog.</h2>
+            <p>
+              The Nectar Realm glows when characters care for habitats, repair routes, and listen
+              to the soft signals moving through flowers, roots, mushrooms, silk, and jelly pools.
+            </p>
+            <a className="card-link" href="/queen-jelly/lore">
+              Open lore
+            </a>
+          </article>
+          <article>
+            <p className="eyebrow">Roblox / WWW expansion</p>
+            <h2>Quest loops that reward helping the realm.</h2>
+            <p>
+              Future games can focus on jelly collecting, festival decorating, habitat repair,
+              market quests, archive puzzles, and seasonal kid-safe story events.
+            </p>
+            <a className="card-link" href="/queen-jelly/games">
+              Open game concepts
+            </a>
+          </article>
+        </section>
+
+        <section className="queen-section ecology-layer">
+          <p className="eyebrow">Ecology education layer</p>
+          <h2>Pollinator stewardship as magical care, not homework.</h2>
+          <p>
+            Queen Jelly can gently introduce pollination, habitats, seasonal changes, responsible
+            collecting, and community care through quests and stories. The tone stays comforting,
+            playful, and non-medical.
+          </p>
+        </section>
+      </main>
+    </Shell>
+  )
+}
+
+function QueenCharacterCard({ character, compact = false }) {
+  return (
+    <article className="queen-card queen-character-card">
+      <span className="dub-icon" aria-hidden="true">
+        {character.icon}
+      </span>
+      <p className="eyebrow">{character.role}</p>
+      <h2>{character.name}</h2>
+      <div className="chips">
+        {character.personality.map((trait) => (
+          <span key={trait}>{trait}</span>
+        ))}
+      </div>
+      {!compact ? (
+        <dl className="platform-details">
+          <div>
+            <dt>Abilities</dt>
+            <dd>{character.abilities.join(', ')}</dd>
+          </div>
+          <div>
+            <dt>Story purpose</dt>
+            <dd>{character.storyPurpose}</dd>
+          </div>
+          <div>
+            <dt>Roblox role</dt>
+            <dd>{character.robloxRole}</dd>
+          </div>
+        </dl>
+      ) : (
+        <p>{character.storyPurpose}</p>
+      )}
+    </article>
+  )
+}
+
+function QueenJellyCharactersPage() {
+  return (
+    <Shell>
+      <main className="queen-page">
+        <QueenJellyHero eyebrow="Character garden" title="Queen Jelly Characters" />
+        <QueenJellyNav />
+        <section className="queen-section">
+          <div className="queen-card-grid">
+            {queenJellyCharacters.map((character) => (
+              <QueenCharacterCard character={character} key={character.name} />
+            ))}
+          </div>
+        </section>
+      </main>
+    </Shell>
+  )
+}
+
+function QueenJellyRegionsPage() {
+  return (
+    <Shell>
+      <main className="queen-page">
+        <QueenJellyHero eyebrow="Nectar Realm map" title="Queen Jelly Regions" />
+        <QueenJellyNav />
+        <section className="queen-section">
+          <div className="queen-card-grid">
+            {queenJellyRegions.map((region) => (
+              <article className="queen-card queen-region-card" key={region.name}>
+                <span className="dub-icon" aria-hidden="true">
+                  {region.icon}
+                </span>
+                <h2>{region.name}</h2>
+                <p>{region.atmosphere}</p>
+                <dl className="platform-details">
+                  <div>
+                    <dt>Inhabitants</dt>
+                    <dd>{region.inhabitants.join(', ')}</dd>
+                  </div>
+                  <div>
+                    <dt>Story hooks</dt>
+                    <dd>{region.storyHooks.join(' / ')}</dd>
+                  </div>
+                  <div>
+                    <dt>Game mechanic ideas</dt>
+                    <dd>{region.gameMechanics.join(', ')}</dd>
+                  </div>
+                </dl>
+              </article>
+            ))}
+          </div>
+        </section>
+      </main>
+    </Shell>
+  )
+}
+
+function QueenJellyLorePage() {
+  return (
+    <Shell>
+      <main className="queen-page">
+        <QueenJellyHero eyebrow="Core lore" title="Queen Jelly Lore" />
+        <QueenJellyNav />
+        <section className="queen-section">
+          <div className="queen-lore-timeline">
+            {queenJellyLore.map((item, index) => (
+              <article className="queen-card lore-bloom-card" key={item.title}>
+                <span className="timeline-number">{index + 1}</span>
+                <h2>{item.title}</h2>
+                <p>{item.summary}</p>
+                <strong>{item.meaning}</strong>
+              </article>
+            ))}
+          </div>
+        </section>
+        <section className="queen-section ecology-layer">
+          <p className="eyebrow">QueenJelly.org connection</p>
+          <h2>Queen Jelly Bee is the public face of the realm.</h2>
+          <p>
+            QueenJelly.org can introduce the Nectar Realm, character cards, gentle ecology stories,
+            collectible jelly ideas, and future games without exposing private planning systems.
+          </p>
+        </section>
+      </main>
+    </Shell>
+  )
+}
+
+function QueenJellyJelliesPage() {
+  return (
+    <Shell>
+      <main className="queen-page">
+        <QueenJellyHero eyebrow="Collectible jelly system" title="Queen Jelly Types" />
+        <QueenJellyNav />
+        <section className="queen-section">
+          <div className="queen-card-grid">
+            {queenJellyTypes.map((jelly) => (
+              <article className="queen-card jelly-type-card" key={jelly.name}>
+                <p className="eyebrow">{jelly.color}</p>
+                <h2>{jelly.name}</h2>
+                <p>{jelly.meaning}</p>
+                <dl className="platform-details">
+                  <div>
+                    <dt>Powers</dt>
+                    <dd>{jelly.powers.join(', ')}</dd>
+                  </div>
+                  <div>
+                    <dt>Future product/game tie-ins</dt>
+                    <dd>{jelly.tieIns.join(', ')}</dd>
+                  </div>
+                </dl>
+              </article>
+            ))}
+          </div>
+        </section>
+      </main>
+    </Shell>
+  )
+}
+
+function QueenJellyGamesPage() {
+  return (
+    <Shell>
+      <main className="queen-page">
+        <QueenJellyHero eyebrow="WWW / Roblox expansion" title="Queen Jelly Games" />
+        <QueenJellyNav />
+        <section className="queen-section">
+          <div className="book-stack">
+            {queenJellyGames.map((game) => (
+              <article className="queen-card queen-game-card" key={game.title}>
+                <p className="eyebrow">Game concept</p>
+                <h2>{game.title}</h2>
+                <p>{game.loop}</p>
+                <div className="chapter-grid">
+                  {[
+                    ['Player actions', game.playerActions],
+                    ['Collectibles', game.collectibles],
+                    ['Seasonal events', game.seasonalEvents],
+                    ['Safety-friendly kid tone', [game.safetyTone]],
+                  ].map(([label, items]) => (
+                    <div key={label}>
+                      <strong>{label}</strong>
+                      <ul>
+                        {items.map((item) => (
+                          <li key={item}>{item}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  ))}
+                </div>
+              </article>
+            ))}
+          </div>
+        </section>
+      </main>
+    </Shell>
+  )
+}
+
+function ClobotHeroVisual() {
+  return (
+    <div className="clobot-visual" aria-label="Glowing Clobot signal world">
+      <div className="clobot-core">
+        <span className="bot-eye"></span>
+        <span className="bot-eye"></span>
+        <strong>CLOBOT</strong>
+      </div>
+      {['Scout', 'Glow', 'Echo', 'Moss', 'Chaos'].map((chip, index) => (
+        <span className={`signal-chip signal-chip-${index + 1}`} key={chip}>
+          {chip}
+        </span>
+      ))}
+    </div>
+  )
+}
+
+function ClobotGamePage() {
+  return (
+    <Shell>
+      <main className="clobot-page">
+        <section className="clobot-hero">
+          <div>
+            <p className="eyebrow">Standalone Roblox-native universe</p>
+            <h1>{clobotGame.title}</h1>
+            <p className="clobot-subtitle">{clobotGame.subtitle}</p>
+            <p className="lede">{clobotGame.positioning}</p>
+            <div className="hero-actions">
+              <a href="#clobot-loop">Explore the loop</a>
+              <a href="#clobot-realms">Visit signal realms</a>
+              <a href="#clobot-roadmap">Long-term vision</a>
+            </div>
+          </div>
+          <ClobotHeroVisual />
+        </section>
+
+        <section className="clobot-section clobot-not-section" aria-label="Clobot boundary notes">
+          {clobotGame.whatItIsNot.map((item) => (
+            <span key={item}>{item}</span>
+          ))}
+        </section>
+
+        <section className="clobot-section" aria-labelledby="what-clobot-title">
+          <div className="section-heading">
+            <p className="eyebrow">What is a Clobot?</p>
+            <h2 id="what-clobot-title">A tiny machine friend with a weird little job.</h2>
+          </div>
+          <div className="clobot-grid">
+            {clobotDefinitions.map(([title, text]) => (
+              <article className="clobot-card" key={title}>
+                <h3>{title}</h3>
+                <p>{text}</p>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section className="clobot-section" id="clobot-loop" aria-labelledby="clobot-loop-title">
+          <div className="section-heading">
+            <p className="eyebrow">Core gameplay loop</p>
+            <h2 id="clobot-loop-title">Explore, teach, repair, unlock, and build again.</h2>
+          </div>
+          <ol className="clobot-loop">
+            {clobotGameplayLoop.map((step, index) => (
+              <li key={step}>
+                <span>{index + 1}</span>
+                <strong>{step}</strong>
+              </li>
+            ))}
+          </ol>
+        </section>
+
+        <section className="clobot-section" aria-labelledby="clobot-mechanics-title">
+          <div className="section-heading">
+            <p className="eyebrow">Game mechanics</p>
+            <h2 id="clobot-mechanics-title">Playful systems that feel creative, not technical.</h2>
+          </div>
+          <div className="clobot-grid">
+            {clobotMechanics.map((mechanic) => (
+              <article className="clobot-card mechanic-card" key={mechanic.title}>
+                <h3>{mechanic.title}</h3>
+                <p>{mechanic.text}</p>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section className="clobot-section" id="clobot-realms" aria-labelledby="clobot-realms-title">
+          <div className="section-heading">
+            <p className="eyebrow">World design</p>
+            <h2 id="clobot-realms-title">Signal biomes for strange little adventures.</h2>
+          </div>
+          <div className="clobot-realm-grid">
+            {clobotRealms.map((realm) => (
+              <article className="clobot-card realm-card" key={realm.name}>
+                <p className="eyebrow">{realm.mood}</p>
+                <h3>{realm.name}</h3>
+                <p>{realm.biome}</p>
+                <dl className="platform-details">
+                  <div>
+                    <dt>Creatures</dt>
+                    <dd>{realm.creatures.join(', ')}</dd>
+                  </div>
+                  <div>
+                    <dt>Resources</dt>
+                    <dd>{realm.resources.join(', ')}</dd>
+                  </div>
+                  <div>
+                    <dt>Gameplay style</dt>
+                    <dd>{realm.gameplay}</dd>
+                  </div>
+                </dl>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section className="clobot-section clobot-split" aria-labelledby="clobot-social-title">
+          <div>
+            <p className="eyebrow">Social + creator angle</p>
+            <h2 id="clobot-social-title">Make bots, rooms, puzzles, and safe cosmetic creations.</h2>
+            <p>
+              Clobot should feel like a creator playground: players decorate mini bases, design bot
+              skins, build signal puzzles, and share moderated challenge rooms with friends.
+            </p>
+          </div>
+          <div className="chips clobot-creator-chips">
+            {clobotSocialCreator.map((item) => (
+              <span key={item}>{item}</span>
+            ))}
+          </div>
+        </section>
+
+        <section className="clobot-section" aria-labelledby="clobot-archetypes-title">
+          <div className="section-heading">
+            <p className="eyebrow">Bot personalities + item examples</p>
+            <h2 id="clobot-archetypes-title">Collectible identity without copycat trends.</h2>
+          </div>
+          <div className="clobot-dual-grid">
+            <div className="clobot-card">
+              <h3>Personality archetypes</h3>
+              {clobotArchetypes.map(([name, text]) => (
+                <p key={name}>
+                  <strong>{name}:</strong> {text}
+                </p>
+              ))}
+            </div>
+            <div className="clobot-card">
+              <h3>Fake item examples</h3>
+              {clobotItems.map(([name, text]) => (
+                <p key={name}>
+                  <strong>{name}:</strong> {text}
+                </p>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="clobot-section" id="clobot-roadmap" aria-labelledby="clobot-roadmap-title">
+          <div className="section-heading">
+            <p className="eyebrow">Long-term vision</p>
+            <h2 id="clobot-roadmap-title">A practical path from web prototype to persistent worlds.</h2>
+          </div>
+          <div className="clobot-roadmap">
+            {clobotRoadmap.map((phase) => (
+              <article className="clobot-card roadmap-card" key={phase.phase}>
+                <p className="eyebrow">{phase.phase}</p>
+                <h3>{phase.title}</h3>
+                <ul>
+                  {phase.goals.map((goal) => (
+                    <li key={goal}>{goal}</li>
+                  ))}
+                </ul>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section className="clobot-section clobot-footer-cta">
+          <p className="eyebrow">Wild Weird World connection</p>
+          <h2>A new lane for robotics, imagination, and signal creatures.</h2>
+          <p>
+            Clobot can connect back to WWW HQ as a distinct game idea and creator system, while
+            staying independent from finance systems, market mechanics, or dashboard aesthetics.
+          </p>
+          <div className="hero-actions">
+            <a href="/">Return to WWW HQ</a>
+            <a href="/plans">Open plans</a>
+          </div>
+        </section>
+      </main>
+    </Shell>
+  )
+}
+
+function ClobotLogoFace({
+  variant = 1,
+  label = 'Clobot base face',
+  size = 'large',
+  geometry = 'next',
+  fill = true,
+}) {
+  return (
+    <svg
+      className={`clobot-logo-face clobot-logo-face-${geometry} clobot-logo-face-${size} clobot-logo-face-${variant}`}
+      role="img"
+      aria-label={label}
+      viewBox="0 0 120 120"
+    >
+      {fill ? <circle className="clobot-face-fill" cx="52" cy="60" r="39" /> : null}
+      <path className="clobot-face-c clobot-face-c-classic" d="M 84 23 A 43 43 0 1 0 84 97" />
+      <path className="clobot-face-c clobot-face-c-next" d="M 86 30 A 38 38 0 1 0 86 90" />
+      <circle className="clobot-face-eye clobot-face-eye-left" cx="43" cy="44" r="6.2" />
+      <circle className="clobot-face-eye clobot-face-eye-right" cx="62" cy="44" r="6.2" />
+      <path className="clobot-face-brow clobot-face-brow-left" d="M 38 36 Q 46 31 54 36" />
+      <path className="clobot-face-brow clobot-face-brow-right" d="M 58 36 Q 66 31 74 36" />
+      <circle className="clobot-face-spark clobot-face-spark-one" cx="91" cy="39" r="3" />
+      <circle className="clobot-face-spark clobot-face-spark-two" cx="88" cy="76" r="2.5" />
+    </svg>
+  )
+}
+
+function ClobotLabSwitcher({ active }) {
+  return (
+    <nav className="clobot-compare-switcher" aria-label="Clobot Face Lab comparison">
+      <a className={active === 'classic' ? 'active' : undefined} href="/clobot-lab-classic">
+        Classic
+      </a>
+      <a className={active === 'next' ? 'active' : undefined} href="/clobot-lab-next">
+        Next Experiment
+      </a>
+    </nav>
+  )
+}
+
+function ClobotLabPage({ version = 'next' }) {
+  const featuredFaces = clobotExpressionVariants.slice(0, 6)
+  const isClassic = version === 'classic'
+  const faceGeometry = isClassic ? 'classic' : 'next'
+
+  return (
+    <Shell>
+      <main className="clobot-page clobot-lab-page">
+        <section className="clobot-hero clobot-lab-hero">
+          <div>
+            <p className="eyebrow">
+              {isClassic ? 'Classic Creator Lab' : clobotLab.shortName}
+            </p>
+            <h1>{isClassic ? 'Clobot Creator Lab Classic' : clobotLab.name}</h1>
+            <p className="clobot-subtitle">
+              {isClassic
+                ? 'Original preserved creator-kit direction for comparison.'
+                : clobotLab.subtitle}
+            </p>
+            <p className="lede">{clobotLab.positioning}</p>
+            <div className="hero-actions">
+              <a href="#clobot-creator">Build a bot</a>
+              <a href="#identity-kits">Identity kits</a>
+              <a href="#creator-gallery">Creator system</a>
+            </div>
+          </div>
+          <div className="clobot-lab-station" aria-label="Rotating Clobot creator station">
+            <div className="lab-ring ring-one"></div>
+            <div className="lab-ring ring-two"></div>
+            <ClobotLogoFace
+              variant={1}
+              geometry={faceGeometry}
+              fill={!isClassic}
+              label={
+                isClassic
+                  ? 'Classic clean Clobot creator face preserved for comparison'
+                  : 'Next Clov lowercase c face with higher eyes and thin stroke'
+              }
+            />
+            <small>{isClassic ? 'classic clean' : 'next experiment'}</small>
+          </div>
+        </section>
+
+        <ClobotLabSwitcher active={version} />
+
+        <section className="clobot-section clobot-boundary-card">
+          <p className="eyebrow">Branding rule</p>
+          <h2>Start from the original Clov face, then remix with care.</h2>
+          <p>{clobotLab.boundary}</p>
+          <div className="chips clobot-creator-chips">
+            <span>Optional</span>
+            <span>Experimental</span>
+            <span>Emotion-first</span>
+            <span>Roblox-readable</span>
+            <span>Not core gameplay</span>
+          </div>
+        </section>
+
+        <section className="clobot-section" aria-labelledby="face-dna-title">
+          <div className="section-heading">
+            <p className="eyebrow">Base Clov Geometry</p>
+            <h2 id="face-dna-title">Every Clobot begins from the original Clov face structure.</h2>
+          </div>
+          <div className="base-geometry-compare">
+            {isClassic ? (
+              <article className="clobot-card">
+                <ClobotLogoFace
+                  variant={1}
+                  geometry="classic"
+                  fill
+                  label="Classic Clobot face with inner circle"
+                  size="medium"
+                />
+                <p className="eyebrow">Classic / Circle</p>
+                <h3>Optional comparison</h3>
+                <p>
+                  Preserves the inner circle version so the geometry can be compared directly.
+                </p>
+              </article>
+            ) : null}
+            <article className="clobot-card">
+              <ClobotLogoFace
+                variant={1}
+                geometry={faceGeometry}
+                fill={!isClassic}
+                label={
+                  isClassic
+                    ? 'Classic clean Clov geometry without inner circle'
+                    : 'Next base Clov geometry with thinner C and higher eyes'
+                }
+                size="medium"
+              />
+              {isClassic ? <p className="eyebrow">Classic / Clean</p> : <p className="eyebrow">Next / Experimental</p>}
+              <h3>{isClassic ? 'Recommended default' : 'Next base'}</h3>
+              <p>
+                {isClassic
+                  ? 'Clean no-circle version keeps the C and eyes readable without fill mismatch.'
+                  : 'Thinner, airier, more circular C geometry with eyes raised inside the open mark.'}
+              </p>
+            </article>
+          </div>
+          <div className="face-system-demo">
+            {featuredFaces.map((face, index) => (
+              <article className={`face-example face-example-${index + 1}`} key={face.name}>
+                <ClobotLogoFace
+                  variant={index + 1}
+                  geometry={faceGeometry}
+                  fill={!isClassic}
+                  label={`${face.name} Clobot face`}
+                  size="medium"
+                />
+                <h3>{face.name}</h3>
+                <p>{face.emotion}</p>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section className="clobot-section" id="clobot-creator" aria-labelledby="clobot-creator-title">
+          <div className="section-heading">
+            <p className="eyebrow">Build Your Own Clobot</p>
+            <h2 id="clobot-creator-title">Start from the c-face, then evolve expression and identity.</h2>
+          </div>
+          <div className="clobot-grid">
+            {clobotCreatorFeatures.map(([title, text]) => (
+              <article className="clobot-card lab-card" key={title}>
+                <h3>{title}</h3>
+                <p>{text}</p>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section className="clobot-section" id="identity-kits" aria-labelledby="identity-kits-title">
+          <div className="section-heading">
+            <p className="eyebrow">Clobot Face Kits</p>
+            <h2 id="identity-kits-title">Recognizable expression DNA, not rigid uniforms.</h2>
+          </div>
+          <div className="clobot-grid">
+            {clobotIdentityKits.map((kit) => (
+              <article className="clobot-card identity-kit-card" key={kit.title}>
+                <h3>{kit.title}</h3>
+                <p>{kit.text}</p>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section className="clobot-section" aria-labelledby="expression-title">
+          <div className="section-heading">
+            <p className="eyebrow">Expression system</p>
+            <h2 id="expression-title">Collectible faces that preserve the c silhouette.</h2>
+          </div>
+          <div className="expression-grid">
+            {clobotExpressionVariants.map((variant, index) => (
+              <article className="clobot-card expression-card" key={variant.name}>
+                <ClobotLogoFace
+                  variant={(index % 6) + 1}
+                  geometry={faceGeometry}
+                  fill={!isClassic}
+                  label={`${variant.name} Clobot face`}
+                  size="small"
+                />
+                <p className="eyebrow">{variant.rarity} · {variant.biome}</p>
+                <h3>{variant.name}</h3>
+                <p>{variant.emotion}</p>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section className="clobot-section" aria-labelledby="face-gameplay-title">
+          <div className="section-heading">
+            <p className="eyebrow">Gameplay integration</p>
+            <h2 id="face-gameplay-title">Faces keep kids attached because bots react back.</h2>
+          </div>
+          <div className="clobot-grid">
+            {clobotFaceGameplayHooks.map(([title, text]) => (
+              <article className="clobot-card lab-card" key={title}>
+                <h3>{title}</h3>
+                <p>{text}</p>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section className="clobot-section" aria-labelledby="marketing-kit-title">
+          <div className="section-heading">
+            <p className="eyebrow">Clobot Marketing Kit</p>
+            <h2 id="marketing-kit-title">Playful imagination, not monetized influencer culture.</h2>
+          </div>
+          <div className="clobot-grid">
+            {clobotMarketingKit.map(([title, text]) => (
+              <article className="clobot-card lab-card" key={title}>
+                <h3>{title}</h3>
+                <p>{text}</p>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section className="clobot-section clobot-split" id="creator-gallery">
+          <div>
+            <p className="eyebrow">Community creation system</p>
+            <h2>Share, remix, publish ideas, and host tiny exhibitions safely.</h2>
+            <p>
+              The lab can support template remixing, themed bot families, repair shops, test rooms,
+              and moderated galleries while keeping the main Clobot world open, mysterious, and
+              unconstrained.
+            </p>
+          </div>
+          <div className="chips clobot-creator-chips">
+            {clobotCommunitySystem.map((item) => (
+              <span key={item}>{item}</span>
+            ))}
+          </div>
+        </section>
+
+        <section className="clobot-section" aria-labelledby="creator-archetypes-title">
+          <div className="section-heading">
+            <p className="eyebrow">Creator archetypes</p>
+            <h2 id="creator-archetypes-title">Different makers should make different kinds of weird.</h2>
+          </div>
+          <div className="clobot-grid">
+            {clobotCreatorArchetypes.map(([title, text]) => (
+              <article className="clobot-card archetype-card" key={title}>
+                <h3>{title}</h3>
+                <p>{text}</p>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section className="clobot-section clobot-dual-grid" aria-label="Educational and UI ideas">
+          <article className="clobot-card">
+            <p className="eyebrow">Educational angle</p>
+            <h2>Soft systems learning through play.</h2>
+            <div className="chips clobot-creator-chips">
+              {clobotEducationAngles.map((item) => (
+                <span key={item}>{item}</span>
+              ))}
+            </div>
+          </article>
+          <article className="clobot-card">
+            <p className="eyebrow">Optional UI ideas</p>
+            <h2>Maker tools that can evolve later.</h2>
+            <div className="chips clobot-creator-chips">
+              {clobotLabUiIdeas.map((item) => (
+                <span key={item}>{item}</span>
+              ))}
+            </div>
+          </article>
+        </section>
+
+        <section className="clobot-section clobot-footer-cta">
+          <p className="eyebrow">Protecting creative diversity</p>
+          <h2>Keep the strange inventions strange.</h2>
+          <p>
+            Face Lab gives players expressive c-face DNA, remix prompts, and creation tools, but
+            the broader Clobot universe still welcomes asymmetry, odd silhouettes, mossy builds,
+            scrap machines, signal creatures, and unexpected identities.
+          </p>
+          <div className="hero-actions">
+            <a href="/clobot-game">Return to core game</a>
+            <a href={isClassic ? '/clobot-lab-next' : '/clobot-lab-classic'}>
+              {isClassic ? 'Open Next Experiment' : 'Open Classic'}
+            </a>
+            <a href="/">WWW HQ</a>
+          </div>
+        </section>
+      </main>
+    </Shell>
+  )
+}
+
+function CoreLinkBar() {
+  return (
+    <nav className="seo-core-links" aria-label="Core site links">
+      {seoCoreLinks.map(([label, href]) => (
+        <a href={href} key={href}>
+          {label}
+        </a>
+      ))}
+    </nav>
+  )
+}
+
+function SeoHero({ eyebrow, title, description }) {
+  return (
+    <section className="seo-hero">
+      <p className="eyebrow">{eyebrow}</p>
+      <h1>{title}</h1>
+      <p className="lede">{description}</p>
+      <CoreLinkBar />
+    </section>
+  )
+}
+
+function GamesIndexPage() {
+  const description =
+    'Master index of Wild Weird World games, Roblox ideas, animal games, cozy games, funny games, school games, and adventure worlds.'
+
+  return (
+    <Shell>
+      <RouteSeo
+        title="Wild Weird World Games | Animal Games, Roblox Ideas, Cozy Worlds"
+        description={description}
+        path="/games"
+        schema={{
+          '@context': 'https://schema.org',
+          '@type': 'CollectionPage',
+          name: 'Wild Weird World Games',
+          url: `${OFFICIAL_URL}/games`,
+        }}
+      />
+      <main className="seo-page">
+        <SeoHero eyebrow="Game index" title="Wild Weird World Games" description={description} />
+        <section className="seo-section">
+          <div className="section-heading">
+            <p className="eyebrow">Featured and coming soon</p>
+            <h2>Animal games, school games, adventure games, cozy games, and funny games.</h2>
+          </div>
+          <div className="seo-card-grid">
+            {seoGames.map((game) => (
+              <article className="seo-card" key={game.title}>
+                <p className="eyebrow">{game.status}</p>
+                <h2>{game.title}</h2>
+                <p>{game.summary}</p>
+                <dl className="platform-details">
+                  <div>
+                    <dt>World</dt>
+                    <dd>{game.world}</dd>
+                  </div>
+                  <div>
+                    <dt>Genre tags</dt>
+                    <dd>{game.genres.join(', ')}</dd>
+                  </div>
+                  <div>
+                    <dt>Animal tags</dt>
+                    <dd>{game.animals.join(', ')}</dd>
+                  </div>
+                </dl>
+                <a className="card-link" href={game.slug}>
+                  Open game page
+                </a>
+              </article>
+            ))}
+          </div>
+        </section>
+      </main>
+    </Shell>
+  )
+}
+
+function CharactersPage() {
+  const description =
+    'Character encyclopedia for animal game characters, kids game characters, frogs, raccoons, Spider Cafe characters, Midnight Zoo creatures, Webcore High students, and Ducks in a Tub heroes.'
+
+  return (
+    <Shell>
+      <RouteSeo
+        title="Game Character Encyclopedia | Animal Game Characters"
+        description={description}
+        path="/characters"
+        schema={{
+          '@context': 'https://schema.org',
+          '@type': 'CollectionPage',
+          name: 'Game Character Encyclopedia',
+          url: `${OFFICIAL_URL}/characters`,
+        }}
+      />
+      <main className="seo-page">
+        <SeoHero eyebrow="Character encyclopedia" title="Game Characters" description={description} />
+        <section className="seo-section">
+          <div className="seo-card-grid">
+            {seoCharacters.map(([name, descriptionText, personality, favoriteItems, world]) => (
+              <article className="seo-card" key={name}>
+                <p className="eyebrow">{descriptionText}</p>
+                <h2>{name}</h2>
+                <p>{personality}</p>
+                <dl className="platform-details">
+                  <div>
+                    <dt>Favorite things</dt>
+                    <dd>{favoriteItems.join(', ')}</dd>
+                  </div>
+                  <div>
+                    <dt>World association</dt>
+                    <dd>
+                      <a href="/worlds">{world}</a>
+                    </dd>
+                  </div>
+                </dl>
+              </article>
+            ))}
+          </div>
+        </section>
+      </main>
+    </Shell>
+  )
+}
+
+function WorldsPage() {
+  const description =
+    'World encyclopedia for kids game worlds, fantasy worlds, Roblox worlds, maps, lore, creatures, locations, and activities.'
+
+  return (
+    <Shell>
+      <RouteSeo
+        title="Game Worlds Encyclopedia | Kids Fantasy Worlds and Maps"
+        description={description}
+        path="/worlds"
+        schema={{
+          '@context': 'https://schema.org',
+          '@type': 'CollectionPage',
+          name: 'Game Worlds Encyclopedia',
+          url: `${OFFICIAL_URL}/worlds`,
+        }}
+      />
+      <main className="seo-page">
+        <SeoHero eyebrow="World encyclopedia" title="Kids Game Worlds" description={description} />
+        <section className="seo-section">
+          <div className="seo-card-grid">
+            {seoWorlds.map((world) => (
+              <article className="seo-card world-seo-card" key={world.name}>
+                <h2>{world.name}</h2>
+                <p>{world.lore}</p>
+                <dl className="platform-details">
+                  <div>
+                    <dt>Maps</dt>
+                    <dd>{world.maps.join(', ')}</dd>
+                  </div>
+                  <div>
+                    <dt>Creatures</dt>
+                    <dd>{world.creatures.join(', ')}</dd>
+                  </div>
+                  <div>
+                    <dt>Activities</dt>
+                    <dd>{world.activities.join(', ')}</dd>
+                  </div>
+                </dl>
+                <a className="card-link" href={world.game}>
+                  Visit related game
+                </a>
+              </article>
+            ))}
+          </div>
+        </section>
+      </main>
+    </Shell>
+  )
+}
+
+function FounderPage() {
+  const description =
+    'Founder story for a young creator building games, Roblox ideas, animal worlds, cozy weird characters, and beginner game design projects.'
+
+  return (
+    <Shell>
+      <RouteSeo
+        title="Young Game Developer Founder Story | Wild Weird World"
+        description={description}
+        path="/founder"
+        schema={{
+          '@context': 'https://schema.org',
+          '@type': 'AboutPage',
+          name: 'Wild Weird World Founder Story',
+          url: `${OFFICIAL_URL}/founder`,
+        }}
+      />
+      <main className="seo-page">
+        <SeoHero eyebrow="Founder story" title="Young Creator Building Games" description={description} />
+        <section className="seo-section">
+          <div className="article-body">
+            {founderSections.map(([title, text]) => (
+              <article key={title}>
+                <h2>{title}</h2>
+                <p>{text}</p>
+              </article>
+            ))}
+          </div>
+        </section>
+      </main>
+    </Shell>
+  )
+}
+
+function BlogIndexPage() {
+  const description =
+    'Game design blog for kids game development, Roblox game ideas, animal games, cozy games, creative worldbuilding, and beginner design education.'
+
+  return (
+    <Shell>
+      <RouteSeo
+        title="Kids Game Development Blog | Roblox Ideas and Animal Games"
+        description={description}
+        path="/blog"
+        schema={{
+          '@context': 'https://schema.org',
+          '@type': 'Blog',
+          name: 'Wild Weird World Game Design Blog',
+          url: `${OFFICIAL_URL}/blog`,
+        }}
+      />
+      <main className="seo-page">
+        <SeoHero eyebrow="Blog" title="Game Design Blog" description={description} />
+        <section className="seo-section">
+          <div className="blog-list">
+            {blogArticles.map((article) => (
+              <article className="blog-list-card" key={article.slug}>
+                <p className="eyebrow">Article {article.order}</p>
+                <h2>{article.title}</h2>
+                <p>{article.description}</p>
+                <div className="chips">
+                  {article.tags.map((tag) => (
+                    <span key={tag}>{tag}</span>
+                  ))}
+                </div>
+                <a className="card-link" href={article.path}>
+                  Read article
+                </a>
+              </article>
+            ))}
+          </div>
+        </section>
+      </main>
+    </Shell>
+  )
+}
+
+function BlogArticlePage({ article }) {
+  return (
+    <Shell>
+      <RouteSeo
+        title={`${article.title} | Wild Weird World Blog`}
+        description={article.description}
+        path={article.path}
+        type="article"
+        schema={{
+          '@context': 'https://schema.org',
+          '@type': 'Article',
+          headline: article.title,
+          description: article.description,
+          url: `${OFFICIAL_URL}${article.path}`,
+        }}
+      />
+      <main className="seo-page article-page">
+        <SeoHero eyebrow="Game design article" title={article.title} description={article.description} />
+        <article className="seo-section article-body">
+          {article.paragraphs.map((paragraph) => (
+            <p key={paragraph}>{paragraph}</p>
+          ))}
+          <div className="article-links">
+            <a href={article.link}>Explore related guide</a>
+            <a href="/games">Games index</a>
+            <a href="/characters">Character encyclopedia</a>
+            <a href="/worlds">World encyclopedia</a>
+            <a href="/founder">Founder story</a>
+          </div>
+        </article>
+      </main>
+    </Shell>
+  )
+}
+
+function GameDevForKidsPage() {
+  const description =
+    'Long-form beginner guide to game development for kids, Roblox basics, art, design, storytelling, testing, publishing safety, and working with friends.'
+
+  return (
+    <Shell>
+      <RouteSeo
+        title="Game Development for Kids | Learn Roblox and Beginner Design"
+        description={description}
+        path="/game-dev-for-kids"
+        schema={{
+          '@context': 'https://schema.org',
+          '@type': 'Guide',
+          name: 'Game Development for Kids',
+          url: `${OFFICIAL_URL}/game-dev-for-kids`,
+        }}
+      />
+      <main className="seo-page">
+        <SeoHero eyebrow="Authority guide" title="Game Development for Kids" description={description} />
+        <section className="seo-section article-body">
+          {gameDevForKidsSections.map(([title, text]) => (
+            <article key={title}>
+              <h2>{title}</h2>
+              <p>{text}</p>
+              <p>
+                In a Wild Weird World project, this step connects back to one small public-safe
+                deliverable: a game page, a character card, a world map, a testable Roblox idea, or
+                a simple loop that a parent-approved friend can understand without private context.
+                Keeping each step visible and simple helps young creators learn design habits while
+                protecting safety, privacy, and creative confidence.
+              </p>
+            </article>
+          ))}
+        </section>
+      </main>
+    </Shell>
+  )
+}
+
+function HowWeBuildGamesPage() {
+  const description =
+    'Transparent studio process for game development, indie game design workflow, idea generation, sketching, character design, story, testing, feedback, and iteration.'
+
+  return (
+    <Shell>
+      <RouteSeo
+        title="How We Build Games | Indie Game Design Workflow"
+        description={description}
+        path="/how-we-build-games"
+        schema={{
+          '@context': 'https://schema.org',
+          '@type': 'HowTo',
+          name: 'How We Build Games',
+          url: `${OFFICIAL_URL}/how-we-build-games`,
+        }}
+      />
+      <main className="seo-page">
+        <SeoHero eyebrow="Studio process" title="How We Build Games" description={description} />
+        <section className="process-strip" aria-label="Game development process placeholders">
+          {processSteps.map(([title], index) => (
+            <div className="process-placeholder" key={title}>
+              <span>{index + 1}</span>
+              <strong>{title}</strong>
+            </div>
+          ))}
+        </section>
+        <section className="seo-section article-body">
+          {processSteps.map(([title, text]) => (
+            <article key={title}>
+              <h2>{title}</h2>
+              <p>{text}</p>
+              <p>
+                This stage is intentionally practical. It creates a public-safe artifact that can be
+                linked from the games index, characters encyclopedia, worlds encyclopedia, or blog.
+                A sketch might become a map placeholder. A character note might become a profile.
+                A prototype test might become a clearer FAQ. The workflow favors visible learning
+                over private claims or inflated achievements.
+              </p>
+            </article>
+          ))}
+        </section>
+      </main>
+    </Shell>
+  )
+}
+
+const gamePageCopy = {
+  '/frog-camp': {
+    title: 'Frog Camp',
+    meta: 'Complete Frog Camp game page for a cozy animal game about frogs, camp activities, creature collecting, summer swamp quests, screenshots, and FAQ.',
+    sections: ['Overview', 'Story', 'Characters', 'Camp activities', 'Creature collecting', 'Screenshots section', 'FAQ'],
+    crossLinks: ['/spider-cafe', '/dumpster-raccoon-tycoon', '/dub-dub-dub'],
+    focus:
+      'Frog Camp is a summer swamp adventure where players join frog campers, collect badges, race canoes, decorate friendship cabins, investigate gentle cryptids, and learn how a small animal game can grow into a memorable Roblox world.',
+  },
+  '/spider-cafe': {
+    title: 'Spider Cafe',
+    meta: 'Complete Spider Cafe game page for a cozy cafe game with spider characters, menu systems, upgrades, decorations, world lore, and FAQ.',
+    sections: ['Story', 'Menu system', 'Spider characters', 'Cafe upgrades', 'Decorations', 'World lore', 'FAQ'],
+    crossLinks: ['/frog-camp', '/dumpster-raccoon-tycoon', '/dub-dub-dub'],
+    focus:
+      'Spider Cafe is a cute creepy cozy cafe simulation where gentle spider characters serve frog tea, bug pastries, glowing drinks, and kindness inside a rainy terrarium world.',
+  },
+  '/dumpster-raccoon-tycoon': {
+    title: 'Dumpster Raccoon Tycoon',
+    meta: 'Complete Dumpster Raccoon Tycoon game page for a funny animal tycoon about trash empire mechanics, collectibles, kingdom upgrades, raccoon lore, and FAQ.',
+    sections: ['Story', 'Trash empire mechanics', 'Collectibles', 'Kingdom upgrades', 'Raccoon lore', 'FAQ'],
+    crossLinks: ['/frog-camp', '/spider-cafe', '/dub-dub-dub'],
+    focus:
+      'Dumpster Raccoon Tycoon is a cartoon animal tycoon about building a trash empire, collecting shiny objects, upgrading legendary dumpsters, driving shopping carts, and turning safe silly chaos into a repeatable game loop.',
+  },
+}
+
+function SeoGameLandingPage({ game }) {
+  return (
+    <Shell>
+      <RouteSeo
+        title={`${game.title} Game | Wild Weird World`}
+        description={game.meta}
+        path={currentRoute()}
+        schema={{
+          '@context': 'https://schema.org',
+          '@type': 'VideoGame',
+          name: game.title,
+          description: game.meta,
+          url: `${OFFICIAL_URL}${currentRoute()}`,
+        }}
+      />
+      <main className="seo-page game-landing-page">
+        <SeoHero eyebrow="Game landing page" title={game.title} description={game.focus} />
+        <section className="seo-section article-body">
+          {game.sections.map((section, index) => (
+            <article key={section}>
+              <h2>{section}</h2>
+              <p>
+                {game.title} uses this {section.toLowerCase()} layer to make the game readable for
+                new players, parents, and future collaborators. The page explains what the player
+                does, why the world is fun, how the characters support the loop, and where the idea
+                fits inside Wild Weird World. Instead of promising finished features, it describes a
+                public-safe design direction that can become maps, Roblox prototypes, screenshots,
+                character cards, and testable quests over time.
+              </p>
+              <p>
+                The design goal is simple: make the first minute clear and the next discovery
+                tempting. Players should understand the main action, meet a memorable animal
+                character, find a cozy or funny location, and earn a small reward that belongs to
+                the world. In section {index + 1}, the focus stays on beginner-friendly game design,
+                animal game storytelling, safe creative worldbuilding, and repeatable play that can
+                be tested without private systems or monetization claims.
+              </p>
+            </article>
+          ))}
+          <article>
+            <h2>Cross-links</h2>
+            <div className="article-links">
+              {game.crossLinks.map((href) => (
+                <a href={href} key={href}>
+                  {href.replace('/', '').replaceAll('-', ' ')}
+                </a>
+              ))}
+              <a href="/games">All games</a>
+              <a href="/characters">Characters</a>
+              <a href="/worlds">Worlds</a>
+              <a href="/blog">Blog</a>
+            </div>
+          </article>
+        </section>
+      </main>
+    </Shell>
+  )
+}
+
 function BrandFooter() {
   return (
     <footer className="brand-footer">
@@ -1723,9 +3673,62 @@ function BrandFooter() {
 }
 
 function App() {
+  const blogArticle = blogArticles.find((article) => isRoute(article.path))
+  const seoGamePage = gamePageCopy[currentRoute()]
+
   return (
     <>
-      {isRoute('/ontology') ? (
+      {isRoute('/stories') ? (
+        <StoryHubPage />
+      ) : isRoute('/stories/hollow-coast') ? (
+        <HollowCoastPage />
+      ) : isRoute('/stories/hollow-coast/characters') ? (
+        <HollowCoastCharactersPage />
+      ) : isRoute('/stories/hollow-coast/locations') ? (
+        <HollowCoastLocationsPage />
+      ) : isRoute('/stories/hollow-coast/books') ? (
+        <HollowCoastBooksPage />
+      ) : isRoute('/stories/hollow-coast/creatures') ? (
+        <SimpleArchivePage
+          title="Hollow Coast Creatures"
+          eyebrow="Creature encyclopedia"
+          items={hollowCoastCreatures}
+          detailLabel="Creature card"
+        />
+      ) : isRoute('/stories/hollow-coast/realms') ? (
+        <SimpleArchivePage
+          title="Hollow Coast Realms"
+          eyebrow="Realm atlas"
+          items={hollowCoastRealms}
+          detailLabel="Realm card"
+        />
+      ) : isRoute('/stories/hollow-coast/portal-network') ? (
+        <HollowCoastPortalNetworkPage />
+      ) : isRoute('/stories/hollow-coast/merch-lab') ? (
+        <HollowCoastMerchLabPage />
+      ) : isRoute('/stories/hollow-coast/social-media-kit') ? (
+        <HollowCoastSocialMediaKitPage />
+      ) : isRoute('/queen-jelly') ? (
+        <QueenJellyLandingPage />
+      ) : isRoute('/queen-jelly/characters') ? (
+        <QueenJellyCharactersPage />
+      ) : isRoute('/queen-jelly/regions') ? (
+        <QueenJellyRegionsPage />
+      ) : isRoute('/queen-jelly/lore') ? (
+        <QueenJellyLorePage />
+      ) : isRoute('/queen-jelly/jellies') ? (
+        <QueenJellyJelliesPage />
+      ) : isRoute('/queen-jelly/games') ? (
+        <QueenJellyGamesPage />
+      ) : isRoute('/clobot-game') ? (
+        <ClobotGamePage />
+      ) : isRoute('/clobot-lab-classic') ? (
+        <ClobotLabPage version="classic" />
+      ) : isRoute('/clobot-lab-next') ||
+        isRoute('/experiments/clobot-creator') ||
+        isRoute('/clobot-lab') ? (
+        <ClobotLabPage version="next" />
+      ) : isRoute('/ontology') ? (
         <OntologyPage />
       ) : isRoute('/handles') ? (
         <HandlesPage />
@@ -1737,6 +3740,24 @@ function App() {
         <CreatorEmpirePage />
       ) : isRoute('/plans') ? (
         <PlansPage />
+      ) : isRoute('/games') ? (
+        <GamesIndexPage />
+      ) : isRoute('/characters') ? (
+        <CharactersPage />
+      ) : isRoute('/worlds') ? (
+        <WorldsPage />
+      ) : isRoute('/founder') ? (
+        <FounderPage />
+      ) : isRoute('/blog') ? (
+        <BlogIndexPage />
+      ) : blogArticle ? (
+        <BlogArticlePage article={blogArticle} />
+      ) : isRoute('/game-dev-for-kids') ? (
+        <GameDevForKidsPage />
+      ) : isRoute('/how-we-build-games') ? (
+        <HowWeBuildGamesPage />
+      ) : seoGamePage ? (
+        <SeoGameLandingPage game={seoGamePage} />
       ) : (
         <Dashboard />
       )}
