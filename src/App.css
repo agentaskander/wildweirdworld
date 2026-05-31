@@ -782,6 +782,122 @@ main {
   padding-bottom: 18px;
 }
 
+.entity-page {
+  background:
+    radial-gradient(circle at 12% 8%, rgba(126, 232, 255, 0.16), transparent 24%),
+    radial-gradient(circle at 88% 12%, rgba(255, 214, 102, 0.18), transparent 24%);
+}
+
+.entity-search-panel {
+  display: grid;
+  gap: 12px;
+  text-align: left;
+}
+
+.entity-search-panel label {
+  color: var(--text-h);
+  font-weight: 900;
+}
+
+.entity-search-panel input {
+  width: 100%;
+  min-height: 48px;
+  box-sizing: border-box;
+  border: 1px solid var(--accent-border);
+  border-radius: 8px;
+  padding: 10px 14px;
+  background: var(--panel);
+  color: var(--text-h);
+  font: inherit;
+}
+
+.entity-link-section {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: clamp(20px, 4vw, 40px);
+  background:
+    radial-gradient(circle at 16% 12%, rgba(255, 255, 255, 0.58), transparent 24%),
+    var(--panel);
+}
+
+.entity-chip-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 10px;
+}
+
+.entity-chip {
+  min-height: 86px;
+  display: grid;
+  align-content: center;
+  gap: 6px;
+  border: 1px solid var(--accent-border);
+  border-radius: 8px;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.74);
+  color: var(--text-h);
+  text-align: left;
+  text-decoration: none;
+}
+
+.entity-chip span {
+  color: var(--accent);
+  font-size: 0.76rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.entity-stat-row {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+  margin: 16px 0;
+}
+
+.entity-stat-row div {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px;
+  background: var(--badge-bg);
+}
+
+.entity-stat-row dt {
+  color: var(--accent);
+  font-size: 0.68rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.entity-stat-row dd {
+  margin: 4px 0 0;
+  color: var(--text-h);
+  font-size: 1.4rem;
+  font-weight: 900;
+}
+
+.entity-detail-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 14px;
+}
+
+.entity-detail-grid article {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 18px;
+  background: var(--badge-bg);
+  text-align: left;
+}
+
+.entity-detail-grid p {
+  color: var(--text);
+  font-weight: 750;
+}
+
+.compact-links {
+  justify-content: flex-start;
+}
+
 .moss-page,
 .creator-page {
   background:

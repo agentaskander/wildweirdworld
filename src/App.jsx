@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import './App.css'
 import {
   hollowCoastBooks,
@@ -52,6 +52,13 @@ import {
   seoGames,
   seoWorlds,
 } from './data/seoExpansion'
+import {
+  entityGraph,
+  entityTypes,
+  entityWorlds,
+  getEntitiesByWorld,
+  getRelatedEntities,
+} from './data/entityGraph'
 
 const PORT = 3195
 const OFFICIAL_DOMAIN = 'wildweirdworld.com'
@@ -998,6 +1005,12 @@ function Navigation() {
       <a className={isRoute('/worlds') ? 'active' : undefined} href="/worlds">
         Worlds
       </a>
+      <a
+        className={currentRoute().startsWith('/entities') || currentRoute().startsWith('/entity') ? 'active' : undefined}
+        href="/entities"
+      >
+        Entities
+      </a>
       <a className={isRoute('/founder') ? 'active' : undefined} href="/founder">
         Founder
       </a>
@@ -1112,6 +1125,10 @@ function Dashboard() {
             <a href="/queen-jelly">Visit Queen Jelly</a>
             <a href="/clobot-game">Open Clobot Game</a>
             <a href="/clobot-lab-next">Open Face Lab</a>
+            <a href="/entities">Open Entity Encyclopedia</a>
+            <a href="/frog-camp">Frog Camp</a>
+            <a href="/spider-cafe">Spider Cafe</a>
+            <a href="/dumpster-raccoon-tycoon">Dumpster Raccoon Tycoon</a>
             <a href={OFFICIAL_URL}>Official domain</a>
             <span>Local port {PORT}</span>
           </div>
@@ -3226,6 +3243,200 @@ function SeoHero({ eyebrow, title, description }) {
   )
 }
 
+function EntityLinkList({ title, entities, emptyText = 'No linked entities yet.' }) {
+  return (
+    <section className="entity-link-section" aria-labelledby={`${title.replaceAll(' ', '-').toLowerCase()}-title`}>
+      <div className="section-heading">
+        <p className="eyebrow">Entity graph</p>
+        <h2 id={`${title.replaceAll(' ', '-').toLowerCase()}-title`}>{title}</h2>
+      </div>
+      {entities.length ? (
+        <div className="entity-chip-grid">
+          {entities.map((entity) => (
+            <a className="entity-chip" href={`/entity/${entity.slug}`} key={entity.id}>
+              <strong>{entity.name}</strong>
+              <span>{entity.type}</span>
+            </a>
+          ))}
+        </div>
+      ) : (
+        <p>{emptyText}</p>
+      )}
+    </section>
+  )
+}
+
+function EntityWorldStats({ world }) {
+  return (
+    <dl className="entity-stat-row">
+      <div>
+        <dt>Characters</dt>
+        <dd>{world.characterCount}</dd>
+      </div>
+      <div>
+        <dt>Locations</dt>
+        <dd>{world.locationCount}</dd>
+      </div>
+      <div>
+        <dt>Items</dt>
+        <dd>{world.itemCount}</dd>
+      </div>
+      <div>
+        <dt>Creatures</dt>
+        <dd>{world.creatureCount}</dd>
+      </div>
+    </dl>
+  )
+}
+
+function EntitiesMasterPage() {
+  const [query, setQuery] = useState('')
+  const normalizedQuery = query.trim().toLowerCase()
+  const visibleEntities = normalizedQuery
+    ? entityGraph.filter((entity) =>
+        [entity.name, entity.type, entity.world, entity.game, entity.description]
+          .join(' ')
+          .toLowerCase()
+          .includes(normalizedQuery),
+      )
+    : entityGraph
+  const description =
+    'Master encyclopedia for Wild Weird World characters, creatures, locations, items, organizations, badges, activities, vehicles, and factions.'
+
+  return (
+    <Shell>
+      <RouteSeo
+        title="Wild Weird World Entity Encyclopedia | Characters, Worlds, Items"
+        description={description}
+        path="/entities"
+        schema={{
+          '@context': 'https://schema.org',
+          '@type': 'CollectionPage',
+          name: 'Wild Weird World Entity Encyclopedia',
+          url: `${OFFICIAL_URL}/entities`,
+        }}
+      />
+      <main className="seo-page entity-page">
+        <SeoHero eyebrow="Entity encyclopedia" title="World Graph Encyclopedia" description={description} />
+        <section className="seo-section entity-search-panel">
+          <label htmlFor="entity-search">Search entities</label>
+          <input
+            id="entity-search"
+            type="search"
+            value={query}
+            onChange={(event) => setQuery(event.target.value)}
+            placeholder="Search characters, worlds, locations, items..."
+          />
+          <p>{visibleEntities.length} public-safe entities visible.</p>
+        </section>
+        {entityTypes.map((type) => (
+          <EntityLinkList
+            key={type}
+            title={`${type}s`}
+            entities={visibleEntities.filter((entity) => entity.type === type)}
+          />
+        ))}
+      </main>
+    </Shell>
+  )
+}
+
+function entitySchemaType(entity) {
+  if (entity.type === 'Character') return 'Person'
+  if (entity.type === 'Location') return 'Place'
+  if (entity.type === 'Creature') return 'CreativeWork'
+  if (entity.type === 'Activity') return 'Game'
+  return 'CreativeWork'
+}
+
+function entitySeoTitle(entity) {
+  if (entity.type === 'Character') return `${entity.name} | ${entity.world} Character`
+  if (entity.type === 'Location') return `${entity.name} | ${entity.world} Location`
+  if (entity.type === 'Item' && entity.game === 'Dumpster Raccoon Tycoon') {
+    return `${entity.name} | Rare Find in Dumpster Raccoon Tycoon`
+  }
+  return `${entity.name} | ${entity.world} ${entity.type}`
+}
+
+function EntityDetailPage({ entity }) {
+  const worldEntities = getEntitiesByWorld(entity.world)
+  const relatedCharacters = getRelatedEntities(entity.relatedCharacters).slice(0, 3)
+  const relatedLocations = getRelatedEntities(entity.relatedLocations).slice(0, 3)
+  const relatedItems = getRelatedEntities(entity.relatedItems).slice(0, 3)
+  const relatedEntities = getRelatedEntities(entity.relatedEntities).slice(0, 8)
+  const description = `${entity.name} is a ${entity.type.toLowerCase()} in ${entity.world}, linked to ${entity.game}, related characters, locations, items, stories, games, and worlds.`
+
+  return (
+    <Shell>
+      <RouteSeo
+        title={entitySeoTitle(entity)}
+        description={description}
+        path={`/entity/${entity.slug}`}
+        schema={{
+          '@context': 'https://schema.org',
+          '@type': entitySchemaType(entity),
+          name: entity.name,
+          description: entity.description,
+          url: `${OFFICIAL_URL}/entity/${entity.slug}`,
+          isPartOf: entity.world,
+        }}
+      />
+      <main className="seo-page entity-page">
+        <SeoHero eyebrow={`${entity.world} ${entity.type}`} title={entity.name} description={entity.description} />
+        <section className="seo-section entity-detail-grid">
+          <article>
+            <p className="eyebrow">Overview</p>
+            <h2>{entity.name}</h2>
+            <p>{entity.description}</p>
+          </article>
+          <article>
+            <p className="eyebrow">World</p>
+            <h2>{entity.world}</h2>
+            <a className="card-link" href="/worlds">
+              Related world hub
+            </a>
+          </article>
+          <article>
+            <p className="eyebrow">Game</p>
+            <h2>{entity.game}</h2>
+            <a className="card-link" href={entity.gamePath}>
+              Related game page
+            </a>
+          </article>
+        </section>
+        <EntityLinkList title="Related Characters" entities={relatedCharacters} />
+        <EntityLinkList title="Related Locations" entities={relatedLocations} />
+        <EntityLinkList title="Related Items" entities={relatedItems} />
+        <EntityLinkList title="Related Entities" entities={relatedEntities} />
+        <section className="seo-section">
+          <div className="section-heading">
+            <p className="eyebrow">Related stories, games, and worlds</p>
+            <h2>Crawl paths from this entity</h2>
+          </div>
+          <div className="article-links">
+            {entity.relatedStories.map((href) => (
+              <a href={href} key={href}>
+                Story guide
+              </a>
+            ))}
+            {entity.relatedGames.map((href) => (
+              <a href={href} key={href}>
+                Game link
+              </a>
+            ))}
+            <a href="/worlds">Related worlds</a>
+            <a href="/entities">All entities</a>
+          </div>
+        </section>
+        <EntityLinkList
+          title={`More ${entity.world} Entities`}
+          entities={worldEntities.filter((item) => item.id !== entity.id).slice(0, 12)}
+        />
+      </main>
+    </Shell>
+  )
+}
+
 function GamesIndexPage() {
   const description =
     'Master index of Wild Weird World games, Roblox ideas, animal games, cozy games, funny games, school games, and adventure worlds.'
@@ -3245,6 +3456,18 @@ function GamesIndexPage() {
       />
       <main className="seo-page">
         <SeoHero eyebrow="Game index" title="Wild Weird World Games" description={description} />
+        <section className="seo-section">
+          <div className="section-heading">
+            <p className="eyebrow">Crawlable universe graph</p>
+            <h2>Start with the expanded worlds and entity encyclopedia.</h2>
+          </div>
+          <div className="article-links">
+            <a href="/entities">All entities</a>
+            <a href="/frog-camp">Frog Camp</a>
+            <a href="/spider-cafe">Spider Cafe</a>
+            <a href="/dumpster-raccoon-tycoon">Dumpster Raccoon Tycoon</a>
+          </div>
+        </section>
         <section className="seo-section">
           <div className="section-heading">
             <p className="eyebrow">Featured and coming soon</p>
@@ -3302,6 +3525,25 @@ function CharactersPage() {
       <main className="seo-page">
         <SeoHero eyebrow="Character encyclopedia" title="Game Characters" description={description} />
         <section className="seo-section">
+          <div className="section-heading">
+            <p className="eyebrow">Grouped by world</p>
+            <h2>Frog Camp, Spider Cafe, and Trashopolis character networks.</h2>
+          </div>
+          <div className="article-links">
+            <a href="/entities">All entities</a>
+            <a href="/frog-camp">Frog Camp</a>
+            <a href="/spider-cafe">Spider Cafe</a>
+            <a href="/dumpster-raccoon-tycoon">Dumpster Raccoon Tycoon</a>
+          </div>
+          {entityWorlds.map((world) => (
+            <EntityLinkList
+              key={world.name}
+              title={`${world.name} Characters`}
+              entities={getEntitiesByWorld(world.name).filter((entity) => entity.type === 'Character')}
+            />
+          ))}
+        </section>
+        <section className="seo-section">
           <div className="seo-card-grid">
             {seoCharacters.map(([name, descriptionText, personality, favoriteItems, world]) => (
               <article className="seo-card" key={name}>
@@ -3348,6 +3590,25 @@ function WorldsPage() {
       />
       <main className="seo-page">
         <SeoHero eyebrow="World encyclopedia" title="Kids Game Worlds" description={description} />
+        <section className="seo-section">
+          <div className="section-heading">
+            <p className="eyebrow">Expanded world graph</p>
+            <h2>World cards now expose entity counts and direct crawl paths.</h2>
+          </div>
+          <div className="seo-card-grid">
+            {entityWorlds.map((world) => (
+              <article className="seo-card" key={world.name}>
+                <h2>{world.name}</h2>
+                <EntityWorldStats world={world} />
+                <div className="article-links compact-links">
+                  <a href={world.gamePath}>View World</a>
+                  <a href={`/entities?world=${world.name}`}>View Characters</a>
+                  <a href="/entities">View Locations</a>
+                </div>
+              </article>
+            ))}
+          </div>
+        </section>
         <section className="seo-section">
           <div className="seo-card-grid">
             {seoWorlds.map((world) => (
@@ -3606,6 +3867,9 @@ const gamePageCopy = {
 }
 
 function SeoGameLandingPage({ game }) {
+  const expandedWorld = entityWorlds.find((world) => world.game === game.title)
+  const gameEntities = expandedWorld ? getEntitiesByWorld(expandedWorld.name) : []
+
   return (
     <Shell>
       <RouteSeo
@@ -3644,6 +3908,21 @@ function SeoGameLandingPage({ game }) {
               </p>
             </article>
           ))}
+          {['Character', 'Location', 'Creature', 'Organization', 'Activity'].map((type) => (
+            <article key={type}>
+              <h2>{type}s</h2>
+              <div className="entity-chip-grid">
+                {gameEntities
+                  .filter((entity) => entity.type === type)
+                  .map((entity) => (
+                    <a className="entity-chip" href={`/entity/${entity.slug}`} key={entity.id}>
+                      <strong>{entity.name}</strong>
+                      <span>{entity.type}</span>
+                    </a>
+                  ))}
+              </div>
+            </article>
+          ))}
           <article>
             <h2>Cross-links</h2>
             <div className="article-links">
@@ -3655,6 +3934,7 @@ function SeoGameLandingPage({ game }) {
               <a href="/games">All games</a>
               <a href="/characters">Characters</a>
               <a href="/worlds">Worlds</a>
+              <a href="/entities">Entities</a>
               <a href="/blog">Blog</a>
             </div>
           </article>
@@ -3675,6 +3955,8 @@ function BrandFooter() {
 function App() {
   const blogArticle = blogArticles.find((article) => isRoute(article.path))
   const seoGamePage = gamePageCopy[currentRoute()]
+  const entitySlug = currentRoute().startsWith('/entity/') ? currentRoute().replace('/entity/', '') : ''
+  const entityPage = entityGraph.find((entity) => entity.slug === entitySlug)
 
   return (
     <>
@@ -3752,6 +4034,10 @@ function App() {
         <BlogIndexPage />
       ) : blogArticle ? (
         <BlogArticlePage article={blogArticle} />
+      ) : isRoute('/entities') ? (
+        <EntitiesMasterPage />
+      ) : entityPage ? (
+        <EntityDetailPage entity={entityPage} />
       ) : isRoute('/game-dev-for-kids') ? (
         <GameDevForKidsPage />
       ) : isRoute('/how-we-build-games') ? (

@@ -3,6 +3,7 @@ export const seoCoreLinks = [
   ['Games', '/games'],
   ['Characters', '/characters'],
   ['Worlds', '/worlds'],
+  ['Entities', '/entities'],
   ['Founder', '/founder'],
   ['Blog', '/blog'],
 ]
@@ -246,4 +247,3 @@ export const gameDevForKidsSections = [
   ['Safety', 'Avoid personal details, open DMs, stranger data, school names, private accounts, or real-world location clues.'],
   ['Working with friends', 'Give friends simple roles like tester, idea helper, artist, or joke checker, and keep feedback kind and specific.'],
 ]
-
