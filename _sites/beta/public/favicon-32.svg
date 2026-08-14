@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Wild Weird World">
+  <path d="M8 14h10l5 28 7-28h8l7 28 5-28h10L50 52H40l-6-22-6 22H18Z" fill="#2fffa3"/>
+  <path d="M18 14h5l5 28 3-12-4-16h7l7 28 5-28h5L45 52h-5l-6-22-6 22h-5Z" fill="#8b5cf6" opacity=".9"/>
+  <path d="M8 14h10l5 28 7-28h8l7 28 5-28h10" fill="none" stroke="#0b1020" stroke-width="3" stroke-linejoin="round"/>
+</svg>
